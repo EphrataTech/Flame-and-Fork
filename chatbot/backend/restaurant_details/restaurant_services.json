@@ -1,0 +1,35 @@
+{
+  "restaurant_services": {
+    "delivery": {
+      "free_delivery": {
+        "service": "Free delivery to customers within Nairobi",
+        "coverage_area": "Nairobi",
+        "cost": "Free",
+        "availability": true
+      },
+      "express_shipping": {
+        "service": "Express shipping - 60 minutes delivery process",
+        "delivery_time": "60 minutes",
+        "type": "Express",
+        "availability": true
+      }
+    },
+    "dining_events": {
+      "private_dining": {
+        "service": "Private dining and events",
+        "booking_contact": "+254718123987",
+        "description": "Special occasions and private events",
+        "availability": true
+      }
+    }
+  },
+  "services_responses": {
+    "delivery_info": "🚚 We offer free delivery within Nairobi and express 60-minute delivery!",
+    "free_delivery_details": "We provide free delivery to all customers within Nairobi area.",
+    "express_delivery_details": "Need it fast? Our express delivery gets your order to you in just 60 minutes!",
+    "private_events": "For private dining and events, please call +254718123987 to make a booking.",
+    "services_overview": "We offer free delivery in Nairobi, 60-minute express delivery, and private dining services.",
+    "delivery_inquiry": "We have two delivery options: free delivery within Nairobi or express 60-minute delivery. Which would you prefer?",
+    "booking_inquiry": "To book private dining or events, please contact us at +254718123987."
+  }
+}
