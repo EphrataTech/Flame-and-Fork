@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from abc import ABC, abstractmethod
-from chatbot import load_system_prompt
 
 class AIPlatform(ABC):
     @abstractmethod
