@@ -1,10 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from abc import ABC, abstractmethod
-import os
-from dotenv import load_dotenv
-import google.generativeai as genai
+
 
 load_dotenv()
 # App initialization
@@ -28,19 +24,6 @@ class AIPlatform(ABC):
     def chat(self, prompt: str) -> str:
         """Method to handle chat requests"""
         pass
-
-
-def load_system_prompt():
-    # Add more files to load data from
-    with open("restaurant/system_prompt.md", "r") as prompt_file:
-        prompt_content = prompt_file.read().strip()
-    with open("restaurant/restaurant_menu.json", "r") as menu:
-        menu_content = menu.read().strip()
-    with open("restaurant/restaurant_operations.json", "r") as restaurant_operations:
-        operations_content = restaurant_operations.read().strip()
-    with open("restaurant/restaurant_services.json", "r") as restaurant_services:
-        services_content = restaurant_services.read().strip()
-    return f"{prompt_content}\n\n{menu_content}\n\n{operations_content}\n\n{services_content}"
 
 
 class Gemini(AIPlatform):
