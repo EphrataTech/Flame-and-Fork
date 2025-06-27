@@ -1,41 +1,6 @@
-html {
-  scroll-behavior: smooth;
-}
-
-/* Carousel Styles */
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.carousel-slide.active {
-  opacity: 1;
-}
-
-.carousel-dot.active {
-  background-color: white !important;
-}
+/* COMPLETE FUNCTIONAL CSS - READY TO USE */
 
 /* Typewriter Animation */
-.typewriter {
-  overflow: hidden;
-  border-right: 0.15em solid #f97316;
-  white-space: nowrap;
-  margin: 0 auto;
-  letter-spacing: 0.15em;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
 @keyframes typing {
   from {
     width: 0;
@@ -55,25 +20,64 @@ html {
   }
 }
 
-/* Hover Effects */
-.dish-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+.typewriter {
+  overflow: hidden;
+  border-right: 0.15em solid #f97316;
+  white-space: nowrap;
+  letter-spacing: 0.15em;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
-/* Dark Mode Transitions */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+/* Carousel States */
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
 }
 
-/* Mobile Menu Animation */
-#mobileMenu {
-  transition: all 0.3s ease;
+.carousel-slide.active {
+  opacity: 1;
+  z-index: 2;
 }
 
+.carousel-dot.active {
+  background-color: white !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #f97316;
+  border-radius: 4px;
+}
+
+/* Modal Animations */
+#successModal.show {
+  animation: fadeIn 0.3s ease;
+}
 #mobileMenu.show {
-  display: block;
   animation: slideDown 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideDown {
@@ -87,6 +91,52 @@ html {
   }
 }
 
+/* Hover Effects */
+.dish-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.menu-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Form Styles */
+.error-message {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+input:focus,
+textarea:focus {
+  transform: translateY(-1px);
+}
+
+/* Dark Mode Transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Button Hover Effects */
+button:hover {
+  transform: translateY(-1px);
+}
+
+/* Image Hover Effects */
+img {
+  transition: transform 0.3s ease;
+}
+
+.dish-card img:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth Transitions */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Loading Animation for Chatbot */
 @keyframes bounce {
   0%,
   80%,
@@ -101,27 +151,6 @@ html {
 .animate-bounce {
   animation: bounce 1.4s infinite ease-in-out both;
 }
-/* Form Error Messages */
-.error-message {
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-/* Success Modal Animation */
-#successModal.show {
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
 /* Responsive Design Helpers */
 @media (max-width: 768px) {
@@ -134,24 +163,33 @@ html {
   }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .bg-orange-500 {
+    background-color: #000 !important;
+  }
+
+  .text-orange-500 {
+    color: #000 !important;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #f97316;
-  border-radius: 4px;
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ea580c;
-}
-
-
-
-
