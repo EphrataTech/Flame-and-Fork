@@ -105,3 +105,50 @@ function initSmoothScrolling() {
   })
 }
 
+// Form Validation
+function initFormValidation() {
+  const feedbackForm = document.getElementById("feedbackForm")
+  if (!feedbackForm) return
+
+  const fields = {
+    fullName: {
+      element: document.getElementById("fullName"),
+      error: document.getElementById("fullNameError"),
+      validate: (value) => {
+        if (!value.trim()) return "Full name is required"
+        if (value.trim().length < 2) return "Full name must be at least 2 characters"
+        return null
+      },
+    },
+    email: {
+      element: document.getElementById("email"),
+      error: document.getElementById("emailError"),
+      validate: (value) => {
+        if (!value.trim()) return "Email is required"
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(value)) return "Please enter a valid email address"
+        return null
+      },
+    },
+    phone: {
+      element: document.getElementById("phone"),
+      error: document.getElementById("phoneError"),
+      validate: (value) => {
+        if (value.trim() && !/^[+]?[0-9\s\-()]{10,}$/.test(value)) {
+          return "Please enter a valid phone number"
+        }
+        return null
+      },
+    },
+    message: {
+      element: document.getElementById("message"),
+      error: document.getElementById("messageError"),
+      validate: (value) => {
+        if (!value.trim()) return "Message is required"
+        if (value.trim().length < 10) return "Message must be at least 10 characters"
+        return null
+      },
+    },
+  }
+
+}
