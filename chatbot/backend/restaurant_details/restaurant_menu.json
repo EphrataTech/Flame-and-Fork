@@ -1,0 +1,117 @@
+{
+  "restaurant_menu": {
+    "signature_dishes": [
+      {
+        "id": "spicy_butter_chicken",
+        "name": "Spicy Butter Chicken",
+        "category": "signature",
+        "description": "Tender chicken in rich, spicy butter sauce",
+        "spicy": true,
+        "vegetarian": false,
+        "available": true
+      },
+      {
+        "id": "grilled_salmon_platter",
+        "name": "Grilled Salmon Platter",
+        "category": "signature",
+        "description": "Fresh grilled salmon with seasonal sides",
+        "spicy": false,
+        "vegetarian": false,
+        "available": true
+      },
+      {
+        "id": "beef_stew_delight",
+        "name": "Beef Stew Delight",
+        "category": "signature",
+        "description": "Hearty beef stew with vegetables and herbs",
+        "spicy": false,
+        "vegetarian": false,
+        "available": true
+      },
+      {
+        "id": "garlic_herb_chicken",
+        "name": "Garlic Herb Chicken",
+        "category": "signature",
+        "description": "Aromatic chicken with garlic and fresh herbs",
+        "spicy": false,
+        "vegetarian": false,
+        "available": true
+      }
+    ],
+    "vegetarian_dishes": [
+      {
+        "id": "roasted_green_medley",
+        "name": "Roasted Green Medley",
+        "category": "vegetarian",
+        "description": "Seasonal roasted vegetables with herbs",
+        "spicy": false,
+        "vegetarian": true,
+        "vegan": true,
+        "available": true
+      },
+      {
+        "id": "stir_fried_pepper_mix",
+        "name": "Stir-Fried Pepper Mix",
+        "category": "vegetarian",
+        "description": "Colorful peppers stir-fried with Asian flavors",
+        "spicy": true,
+        "vegetarian": true,
+        "vegan": true,
+        "available": true
+      },
+      {
+        "id": "quinoa_power_bowl",
+        "name": "Quinoa Power Bowl",
+        "category": "vegetarian",
+        "description": "Nutritious quinoa bowl with fresh vegetables",
+        "spicy": false,
+        "vegetarian": true,
+        "vegan": true,
+        "available": true
+      }
+    ],
+    "drinks": [
+      {
+        "id": "herbal_mint_tea",
+        "name": "Herbal Mint Tea",
+        "category": "drinks",
+        "type": "hot",
+        "caffeine": false,
+        "available": true
+      },
+      {
+        "id": "vanilla_hot_chocolate",
+        "name": "Vanilla Hot Chocolate",
+        "category": "drinks",
+        "type": "hot",
+        "caffeine": false,
+        "available": true
+      },
+      {
+        "id": "tropical_fruit_mix",
+        "name": "Tropical Fruit Mix",
+        "category": "drinks",
+        "type": "cold",
+        "caffeine": false,
+        "available": true
+      },
+      {
+        "id": "classic_black_coffee",
+        "name": "Classic Black Coffee",
+        "category": "drinks",
+        "type": "hot",
+        "caffeine": true,
+        "available": true
+      }
+    ]
+  },
+  "chatbot_responses": {
+    "menu_greeting": "Here's our delicious menu! We have signature dishes, vegetarian options, and refreshing drinks.",
+    "signature_intro": "Our signature dishes are customer favorites, made with premium ingredients:",
+    "vegetarian_intro": "Our vegetarian dishes are fresh, flavorful, and plant-based:",
+    "drinks_intro": "Quench your thirst with our selection of hot and cold beverages:",
+    "spicy_warning": "🌶️ This dish has a spicy kick!",
+    "out_of_stock": "Sorry, this item is currently unavailable.",
+    "price_inquiry": "Would you like to know the price of any specific item?"
+  }
+}
