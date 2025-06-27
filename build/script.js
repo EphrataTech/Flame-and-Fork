@@ -199,3 +199,35 @@ function initFormValidation() {
     }
   })
 
+  / Success Modal
+function showSuccessModal() {
+  const modal = document.getElementById("successModal")
+  const closeButton = document.getElementById("closeModal")
+
+  if (modal) {
+    modal.classList.remove("hidden")
+    modal.classList.add("show")
+
+    // Close modal functionality
+    const closeModal = () => {
+      modal.classList.add("hidden")
+      modal.classList.remove("show")
+    }
+
+    if (closeButton) {
+      closeButton.addEventListener("click", closeModal)
+    }
+
+    // Close on backdrop click
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        closeModal()
+      }
+    })
+
+    // Auto close after 5 seconds
+    setTimeout(closeModal, 5000)
+  }
+}
+
+
