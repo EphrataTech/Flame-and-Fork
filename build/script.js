@@ -152,3 +152,32 @@ function initFormValidation() {
   }
 
 }
+// Real-time validation
+  Object.keys(fields).forEach((fieldName) => {
+    const field = fields[fieldName]
+    if (field.element) {
+      field.element.addEventListener("blur", () => {
+        validateField(fieldName, field)
+      })
+
+      field.element.addEventListener("input", () => {
+        if (field.error && !field.error.classList.contains("hidden")) {
+          validateField(fieldName, field)
+        }
+      })
+    }
+  })
+
+  function validateField(fieldName, field) {
+    const error = field.validate(field.element.value)
+    if (error) {
+      field.error.textContent = error
+      field.error.classList.remove("hidden")
+      field.element.classList.add("border-red-500")
+      return false
+    } else {
+      field.error.classList.add("hidden")
+      field.element.classList.remove("border-red-500")
+      return true
+    }
+  }
