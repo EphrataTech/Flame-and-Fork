@@ -49,7 +49,7 @@ function initMobileMenu() {
     })
   }
 }
-/ Carousel Functionality
+// Carousel Functionality
 function initCarousel() {
   const slides = document.querySelectorAll(".carousel-slide")
   const dots = document.querySelectorAll(".carousel-dot")
