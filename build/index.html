@@ -465,8 +465,10 @@
           >
             <span>SUBMIT</span>
             <svg
-              xmlns="./assets/vectors/Vector.png"
-              class="h-4 w-4"
+
+              xmlns="../assets/vectors/Vector.png"
+              class="h-4 w-4"script
+
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -483,7 +485,8 @@
       </div>
     </section>
     <section class="max-w-lg mx-auto my-10">
-      <div class="bg-red-500 p-6 rounded-lg shadow-lg">
+      <!--<div class="bg-red-500 p-6 rounded-lg shadow-lg"> -->
+      <div class="chat-container-wrapper p-6">
         <!-- Header -->
         <div class="flex items-center mb-4">
           <img
@@ -493,30 +496,9 @@
           />
           <h2 class="text-xl font-bold">CHATBOT</h2>
         </div>
-
-        <!-- Chat Messages -->
-        <div class="space-y-4">
-          <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
-            Hello! need help in Flame & Fork?
-          </div>
-
-          <div class="flex justify-end">
-            <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
-              Does Flame & Fork offer free delivery?
-            </div>
-          </div>
-
-          <div class="bg-white px-4 py-2 rounded-xl w-fit max-w-xs">
-            Flame & Fork offers free delivery, but only to customers within
-            Nairobi. Orders outside this area are currently not supported.
-          </div>
-
-          <div class="flex justify-end">
-            <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
-              What dishes do you offer?
-            </div>
-          </div>
-
+        <div class="chat-messages" id="chatMessages">
+          <!--Chat messages will be added here by javascript-->
+        </div>
           <!-- Typing Indicator -->
           <div class="flex space-x-2">
             <div class="w-3 h-3 bg-pink-300 rounded-full animate-bounce"></div>
@@ -530,13 +512,15 @@
         </div>
 
         <!-- Input Field -->
-        <div class="mt-6 flex">
+        <div class="mt-6 flex chat-input-area">
           <input
             type="text"
+            id="userInput"
             placeholder="Type Message"
             class="flex-1 px-4 py-2 rounded-l-full bg-gray-200 focus:outline-none"
           />
           <button
+          id="sendButton"
             class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-r-full flex items-center justify-center"
           >
             <svg
@@ -555,6 +539,7 @@
             </svg>
           </button>
         </div>
+        <div id="statusMessage" class="status-message"></div>
       </div>
     </section>
     <footer class="bg-black text-white py-10 px-6">
@@ -634,5 +619,6 @@
         </div>
       </div>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>
