@@ -34,3 +34,7 @@ This backend is designed using **FastAPI** to ensure high performance, automatic
 - Run the app using `uvicorn app.main:app --reload`
 
 ##Testing
+Here are some of the images of test scenarios:
+![404 Error Image][test_images/404_error.png]
+![Health Check Image][test_images/health_check.png]
+![Send Chat Message Image][test_images/send_chat_message.png]
