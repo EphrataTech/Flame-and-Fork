@@ -16,8 +16,12 @@ try:
     app.add_middleware(
     CORSMiddleware,
     # Allows all origins, adjust as needed
-    allow_origins=["https://flameandfork.com", "http://localhost:8000","https://flameandfork.onrender.com/"],
-    allow_credentials=True,
+    allow_origins=["http://127.0.0.1:5500",
+            "http://localhost:5500",
+            "http://localhost:8000",
+            "https://flameandfork.com",
+            "https://flameandfork.onrender.com"],
+    allow_credentials=False,
     allow_methods=["POST", "GET"],  # Allows all methods, adjust as needed
     allow_headers=["*"],  # Allows all headers, adjust as needed
 )

@@ -414,3 +414,161 @@ function hideLoading(element, originalText) {
     element.disabled = false;
     element.innerHTML = originalText;
 }
+// ==================== UTILITY FUNCTIONS ====================
+const chatMessages = document.getElementById('chatMessages'); // The container where all chat messages will be displayed.
+const userInput = document.getElementById('userInput');     // The input field where the user types their questions.
+const sendButton = document.getElementById('sendButton');   // The button to send the user's message.
+const statusMessage = document.getElementById('statusMessage'); // The area to display temporary status/error messages.
+
+const API_ENDPOINT = 'https://flameandfork-api.onrender.com/chat'; //Link to the deployed FastAPI chatbot endpoint
+
+function displayChatMessage(message, sender) {
+    const messageElement = document.createElement('div'); // Create a new div element for the message.
+
+    // Apply base 'message' class and sender-specific Tailwind classes for styling.
+    // The classes here are chosen to match the design language of your existing HTML.
+    if (sender === 'user') {
+        messageElement.classList.add(
+            'message',           // Base message styling
+            'bg-gray-200',       // Background color for user messages
+            'px-4',              // Horizontal padding
+            'py-2',              // Vertical padding
+            'rounded-full',      // Fully rounded corners for user messages
+            'w-fit',             // Width fits content
+            'max-w-xs',          // Maximum width to prevent messages from spanning full width
+            'ml-auto'            // Aligns message to the right (margin-left: auto)
+        );
+    } else {
+        // Styling for bot messages, using a white background to differentiate from user messages.
+        messageElement.classList.add(
+            'message',           // Base message styling
+            'bg-white',          // Background color for bot messages
+            'px-4',
+            'py-2',
+            'rounded-xl',        // Slightly less rounded corners for bot messages (as per original HTML example)
+            'w-fit',
+            'max-w-xs',
+            'mr-auto'            // Aligns message to the left (margin-right: auto)
+        );
+    }
+
+    messageElement.textContent = message; // Set the text content of the message element.
+
+    chatMessages.appendChild(messageElement); // Add the newly created message element to the chat container.
+    // Scroll the chat window to the bottom to make sure the latest message is visible.
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+/**
+ * Displays a temporary status or error message in a designated area below the chat.
+ * The message will clear automatically after a short period.
+ *
+ * @param {string} message - The text content of the status message.
+ * @param {boolean} isError - A boolean flag: if true, applies error-specific styling (red text).
+ */
+function showStatus(message, isError = false) {
+    statusMessage.textContent = message; // Set the text content of the status message element.
+    // Toggles the 'error-message' CSS class based on the `isError` boolean.
+    // This allows for conditional styling (e.g., making error messages red and bold).
+    statusMessage.classList.toggle('error-message', isError);
+
+    // Set a timeout to clear the message after a specified duration.
+    // This ensures that status messages are temporary and don't clutter the UI.
+    setTimeout(() => {
+        statusMessage.textContent = ''; // Clear the text content.
+        statusMessage.classList.remove('error-message'); // Remove any error-specific styling.
+    }, 4000); // The message will disappear after 5000 milliseconds (4 seconds).
+}
+
+/**
+ * Handles the logic for sending a user's message to the backend API and processing its response.
+ * This asynchronous function performs several steps:
+ * 1. Collects the user's input from the text field.
+ * 2. Validates the input to ensure it's not empty.
+ * 3. Displays the user's message in the chat interface.
+ * 4. Clears the input field.
+ * 5. Shows a "Typing..." status while waiting for the API response.
+ * 6. Makes an asynchronous POST request to the backend.
+ * 7. Processes the API response, handling both successful data and errors.
+ * 8. Displays the chatbot's response or an error message in the chat.
+ */
+async function sendUserMessage() {
+    // Get the current value from the user input field and remove any leading/trailing whitespace.
+    const userQuestion = userInput.value.trim();
+
+    // Input validation: If the user input is empty after trimming, show a friendly message and stop.
+    if (userQuestion === '') {
+        showStatus('Please enter a question before sending.', false);
+        return; // Exit the function, preventing an empty message from being sent.
+    }
+
+    // Display the user's question immediately in the chat interface.
+    displayChatMessage(userQuestion, 'user');
+    userInput.value = ''; // Clear the input field so the user can type a new message.
+
+    try {
+        showStatus('Typing...', false); // Display a "Typing..." status to indicate that the chatbot is processing.
+
+        // Make an asynchronous POST request to your FastAPI backend endpoint.
+        const response = await fetch(API_ENDPOINT, {
+            method: 'POST', // Specify the HTTP method as POST.
+            headers: {
+                'Content-Type': 'application/json', // Indicate that the request body is JSON.
+                'Accept': 'application/json'         // Indicate that the client expects a JSON response.
+            },
+            // Convert the JavaScript object `{ prompt: userQuestion }` into a JSON string.
+            // This JSON structure must match the `ChatRequest` Pydantic model defined in your FastAPI backend.
+            body: JSON.stringify({ prompt: userQuestion })
+        });
+
+        // Check if the HTTP response status code indicates success (i.e., 200-299).
+        if (!response.ok) {
+            let errorData;
+            try {
+                // If the response is not OK, try to parse the response body as JSON
+                // to get detailed error information from the backend (e.g., FastAPI's HTTPException details).
+                errorData = await response.json();
+            } catch (e) {
+                // If the response body is not valid JSON, provide a generic fallback error message.
+                errorData = { detail: 'An unexpected error occurred on the server. (Response not JSON)' };
+            }
+            // Throw a new Error with a descriptive message. This will be caught by the `catch` block below.
+            throw new Error(errorData.detail || `HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the successful JSON response from the chatbot.
+        // The `data` object should contain the chatbot's response text (e.g., `data.response`).
+        const data = await response.json();
+
+        // Display the chatbot's response in the chat interface.
+        displayChatMessage(data.response, 'bot');
+        showStatus(''); // Clear the "Typing..." status message as the response has been received and displayed.
+
+    } catch (error) {
+        // Catch any errors that occur during the fetch operation (e.g., network issues)
+        // or during the processing of the response (e.g., JSON parsing errors, errors thrown above).
+        console.error('Chatbot error:', error); // Log the full error object to the browser console for debugging.
+
+        // Display a user-friendly generic error message in the chat area.
+        displayChatMessage('I encountered an error. Please try again later.', 'bot');
+        // Display a more specific error message in the status area below the chat.
+        showStatus(`Error: ${error.message || 'Something went wrong.'}`, true);
+    }
+}
+
+// Add event listeners to trigger the `sendMessage` function.
+
+// 1. Event listener for the 'click' event on the send button.
+sendButton.addEventListener('click', sendUserMessage);
+
+// 2. Event listener for the 'keypress' event on the user input field.
+// This allows the user to press the Enter key to send their message.
+userInput.addEventListener('keypress', (event) => {
+    // Check if the pressed key is the 'Enter' key.
+    if (event.key === 'Enter') {
+        sendUserMessage(); // Call the sendMessage function.
+    }
+});
+
+// Initial welcome message displayed when the page first loads.
+displayChatMessage('Hello! How can I help you today?', 'bot');
