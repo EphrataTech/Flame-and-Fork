@@ -26,3 +26,26 @@ function initDarkMode() {
     })
   }
 }
+function initMobileMenu() {
+  const mobileMenuToggle = document.getElementById("mobileMenuToggle")
+  const mobileMenu = document.getElementById("mobileMenu")
+  const mobileMenuDropdown = document.getElementById("mobileMenuDropdown")
+  const mobileDropdownContent = document.getElementById("mobileDropdownContent")
+
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden")
+      mobileMenu.classList.toggle("show")
+    })
+  }
+
+  if (mobileMenuDropdown && mobileDropdownContent) {
+    mobileMenuDropdown.addEventListener("click", () => {
+      mobileDropdownContent.classList.toggle("hidden")
+      const icon = mobileMenuDropdown.querySelector("i")
+      icon.classList.toggle("fa-chevron-down")
+      icon.classList.toggle("fa-chevron-up")
+    })
+  }
+}
+
