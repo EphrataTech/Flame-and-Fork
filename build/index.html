@@ -1,11 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Flame&Fork</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="relative">
     <section
@@ -15,15 +20,51 @@
       <header class="fixed top-0 left-0 w-full bg-opacity-70 z-50">
         <nav class="flex items-center justify-between px-8 py-4">
           <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
-          <ul class="flex space-x-6 text-white font-bold">
+
+          <!-- Desktop Menu -->
+          <ul class="hidden md:flex space-x-6 text-white font-bold">
             <li><a href="#">HOME</a></li>
             <li><a href="#">MENU</a></li>
             <li><a href="#">OUR STORY</a></li>
             <li><a href="#">FEEDBACK</a></li>
           </ul>
+
+          <!-- Dark Mode Toggle (Desktop only) -->
+          <button
+            id="darkModeToggle"
+            class="hidden md:inline text-white text-xl ml-4"
+          >
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun hidden"></i>
+          </button>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button id="mobileMenuToggle" class="md:hidden text-white text-2xl">
+            <i class="fas fa-bars"></i>
+          </button>
         </nav>
+
+        <!-- Mobile Menu Content (Initially hidden) -->
+        <div
+          id="mobileMenu"
+          class="hidden md:hidden bg-black text-white w-full overflow-hidden transition-all duration-300 max-h-0"
+        >
+          <ul class="space-y-4">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">MENU</a></li>
+            <li><a href="#">OUR STORY</a></li>
+            <li><a href="#">FEEDBACK</a></li>
+            <li id="mobileMenuDropdown" class="cursor-pointer">More ▼</li>
+            <ul id="mobileDropdownContent" class="hidden space-y-2 pl-4">
+              <li><a href="#">Option 1</a></li>
+              <li><a href="#">Option 2</a></li>
+            </ul>
+          </ul>
+        </div>
       </header>
       <h1 class="text-4xl md:text-6xl font-bold mb-4">WELCOME TO FLAME&FORK</h1>
+      <h1 id="typewriter" class="text-4xl md:text-6xl font-bold mb-4"></h1>
+
       <p class="text-lg md:text-xl mb-6">"Where every meal feels at home."</p>
       <a
         href="#"
@@ -84,7 +125,7 @@
       </h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
         <!-- Dish Items -->
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/spicy-butter-chicken.jpg"
             alt="Spicy Butter Chicken"
@@ -94,7 +135,7 @@
           <p class="text-sm italic">Creamy, spicy, tender</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/grilled-salmon-platter.jpg"
             alt="Grilled Salmon Platter"
@@ -104,7 +145,7 @@
           <p class="text-sm italic">Fresh, zesty, healthy</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/beef-stew.jpg"
             alt="Beef Stew Delight"
@@ -114,7 +155,7 @@
           <p class="text-sm italic">Rich, hearty, comforting</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/garlic-herb-chicken.jpg"
             alt="Garlic Herb Chicken"
@@ -135,7 +176,7 @@
         Vegetarian Dishes
       </h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/guac-veggi-bowl.jpg"
             alt="Guac Veggie Bowl"
@@ -145,7 +186,7 @@
           <p class="text-sm italic">Colorful, zesty, nutritious</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/rosted-green-m.jpg"
             alt="Roasted Green Medley"
@@ -155,7 +196,7 @@
           <p class="text-sm italic">Crunchy, vibrant, seasoned</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/stir-fired-paper-mix.jpg"
             alt="Stir-Fried Pepper Mix"
@@ -165,7 +206,7 @@
           <p class="text-sm italic">Spicy, smoky, crunchy</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/Quinoa Power Bowl.jpg"
             alt="Quinoa Power Bowl"
@@ -186,7 +227,7 @@
         Drinks
       </h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/Herbal mint tea.jpg"
             alt="Herbal mint tea"
@@ -196,7 +237,7 @@
           <p class="text-sm italic">Calming, fresh aroma</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/Vanilla Hot Chocolate.jpg"
             alt="Vanilla Hot Chocolate"
@@ -206,7 +247,7 @@
           <p class="text-sm italic">Sweet, cozy treat</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/Tropical fruit mix.jpg"
             alt="Tropical fruit mix"
@@ -216,7 +257,7 @@
           <p class="text-sm italic">Exotic, juicy combo</p>
         </div>
 
-        <div class="text-center">
+        <div class="text-center dish-card">
           <img
             src="../assets/images/Classic black coffee.jpg"
             alt="Classic black coffee"
@@ -360,24 +401,36 @@
           </h2>
         </div>
 
-        <!-- Form Section -->
-        <form class="bg-white p-8 rounded-lg shadow-md space-y-4 w-full">
+        <form
+          id="feedbackForm"
+          class="bg-white p-8 rounded-lg shadow-md space-y-4 w-full"
+        >
           <div>
             <label class="block text-sm font-semibold mb-1">Your Name</label>
             <input
+              id="fullName"
               type="text"
               placeholder="Name"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
             />
+            <p
+              id="fullNameError"
+              class="error-message text-red-500 hidden text-sm mt-1"
+            ></p>
           </div>
 
           <div>
             <label class="block text-sm font-semibold mb-1">Your Email</label>
             <input
+              id="email"
               type="email"
               placeholder="Email"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
             />
+            <p
+              id="emailError"
+              class="error-message text-red-500 hidden text-sm mt-1"
+            ></p>
           </div>
 
           <div>
@@ -385,6 +438,7 @@
               >Your Phone (Optional)</label
             >
             <input
+              id="phone"
               type="tel"
               placeholder="Phone"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
@@ -394,10 +448,15 @@
           <div>
             <label class="block text-sm font-semibold mb-1">Your Message</label>
             <textarea
+              id="message"
               rows="4"
               placeholder="Message"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
             ></textarea>
+            <p
+              id="messageError"
+              class="error-message text-red-500 hidden text-sm mt-1"
+            ></p>
           </div>
 
           <button
@@ -577,4 +636,3 @@
     </footer>
   </body>
 </html>
- 
