@@ -4,6 +4,21 @@
     "tailwindcss": "^4.1.11"
   },
   "scripts": {
-    "tailwind": "npx -i ./src/input.css -o ./build/styles.css --watch"
-  }
+    "tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./build/styles.css --watch"
+  },
+  "name": "group12-full-stuck",
+  "version": "1.0.0",
+  "description": "module one completion project",
+  "main": "tailwind.config.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EphrataTech/Group12-full-stuck.git"
+  },
+  "author": "group 12 students",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EphrataTech/Group12-full-stuck/issues"
+  },
+  "homepage": "https://github.com/EphrataTech/Group12-full-stuck#readme"
 }
