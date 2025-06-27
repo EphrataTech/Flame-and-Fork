@@ -1,7 +1,7 @@
 import google.generativeai as genai
 from google.generativeai.types import BlockedPromptException
 from pathlib import Path
-from models import AIPlatform
+from .models import AIPlatform
 from dotenv import load_dotenv
 import json
 import os

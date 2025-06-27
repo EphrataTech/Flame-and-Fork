@@ -1,7 +1,7 @@
 from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from chatbot import Gemini, api_key
-from models import ChatRequest, ChatResponse
+from .chatbot import Gemini, api_key
+from .models import ChatRequest, ChatResponse
 import logging
 
 logging.basicConfig(level=logging.INFO)
