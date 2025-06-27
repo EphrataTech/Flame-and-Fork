@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from chatbot import Gemini, api_key
 from models import ChatRequest, ChatResponse
@@ -24,3 +24,7 @@ async def root():
 async def chatbot(request: ChatRequest):
     response_text = ai_platform.chat(request.prompt)
     return ChatResponse(response=response_text)
+
+if __name__=="__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
