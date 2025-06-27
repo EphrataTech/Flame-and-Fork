@@ -424,7 +424,8 @@
       </div>
     </section>
     <section class="max-w-lg mx-auto my-10">
-      <div class="bg-red-500 p-6 rounded-lg shadow-lg">
+      <!--<div class="bg-red-500 p-6 rounded-lg shadow-lg"> -->
+      <div class="chat-container-wrapper p-6">
         <!-- Header -->
         <div class="flex items-center mb-4">
           <img
@@ -434,8 +435,20 @@
           />
           <h2 class="text-xl font-bold">CHATBOT</h2>
         </div>
+        <div class="chat-messages" id="chatMessages">
+          <!--Chat messages will be added here by javascript-->
+        </div>
+
+        <!--<div class="chat-input-area mt-6">
+          <input type="text"
+          id="userInput"
+          placeholder="Type Message"
+          class="flex-1 px-4 py-2 rounded-l-full bg-gray-200 focus:outline-none"> 
+
+        </div>-->
 
         <!-- Chat Messages -->
+         <!-- This is the placeholder for the chats
         <div class="space-y-4">
           <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
             Hello! need help in Flame & Fork?
@@ -457,6 +470,7 @@
               What dishes do you offer?
             </div>
           </div>
+          -->
 
           <!-- Typing Indicator -->
           <div class="flex space-x-2">
@@ -471,13 +485,15 @@
         </div>
 
         <!-- Input Field -->
-        <div class="mt-6 flex">
+        <div class="mt-6 flex chat-input-area">
           <input
             type="text"
+            id="userInput"
             placeholder="Type Message"
             class="flex-1 px-4 py-2 rounded-l-full bg-gray-200 focus:outline-none"
           />
           <button
+          id="sendButton"
             class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-r-full flex items-center justify-center"
           >
             <svg
@@ -496,6 +512,7 @@
             </svg>
           </button>
         </div>
+        <div id="statusMessage" class="status-message"></div>
       </div>
     </section>
     <footer class="bg-black text-white py-10 px-6">
