@@ -3,16 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flame&Fork - Feedback</title>
+  <title>Feedback - Flame & Fork</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="styles.css" rel="stylesheet" />
 </head>
-<body>
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="menu.html">Menu</a> |
-    <a href="our-story.html">Our Story</a> |
-    <a href="feedback.html">Feedback</a>
-  </nav>
-  <h1>NEED TO SHARE A THOUGHT?</h1>
-</body>
+<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-utensils text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">Flame & Fork</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors">HOME</a>
+                    <a href="menu.html" class="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors">MENU</a>
+                    <a href="our-story.html" class="text-gray-700 dark:text-gray-300 hover:text-orange-500 transition-colors">OUR STORY</a>
+                    <a href="feedback.html" class="text-orange-500">FEEDBACK</a>
+                </div>
+            
+  
 </html>
