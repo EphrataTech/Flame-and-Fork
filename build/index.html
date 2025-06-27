@@ -6,12 +6,573 @@
     <title>Flame&Fork</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <nav>
-      <a href="index.html">Home</a> | <a href="menu.html">Menu</a> |
-      <a href="our-story.html">Our Story</a> |
-      <a href="feedback.html">Feedback</a>
-    </nav>
-    <h1 class="text-3xl text-red-500 bg-slate-300">Welcome to Flame&Fork</h1>
+  <body class="relative">
+    <section
+      class="h-screen bg-cover bg-center flex flex-col justify-center items-center text-center text-white px-4"
+      style="background-image: url('../assets/images/hero.jpg')"
+    >
+      <header class="fixed top-0 left-0 w-full bg-opacity-70 z-50">
+        <nav class="flex items-center justify-between px-8 py-4">
+          <img src="../assets/images/logo.png" alt="Logo" class="h-12" />
+          <ul class="flex space-x-6 text-white font-bold">
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">MENU</a></li>
+            <li><a href="#">OUR STORY</a></li>
+            <li><a href="#">FEEDBACK</a></li>
+          </ul>
+        </nav>
+      </header>
+      <h1 class="text-4xl md:text-6xl font-bold mb-4">WELCOME TO FLAME&FORK</h1>
+      <p class="text-lg md:text-xl mb-6">"Where every meal feels at home."</p>
+      <a
+        href="#"
+        class="mt-30 px-6 py-2 font-bold hover:bg-white text-left hover:text-black transition underline"
+        >EXPLORE</a
+      >
+    </section>
+
+    <section class="bg-black text-white px-8 py-16">
+      <div
+        class="min-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-start sm:max-w-7xl"
+      >
+        <!-- Left Side: About Section -->
+        <div>
+          <h2 class="text-4xl font-extrabold underline mb-6">About us</h2>
+          <p class="mb-8 max-w-md text-lg font-medium leading-relaxed">
+            “Our restaurant began as a small family kitchen built on recipes
+            passed down through generations. We grew into a space where comfort,
+            culture, and good food come together.”
+          </p>
+          <img
+            src="../assets/images/cheif-vlaue.jpg"
+            alt="Chef cooking"
+            class="w-full max-w-sm rounded-lg shadow-lg"
+          />
+        </div>
+
+        <!-- Right Side: Image + Values -->
+        <div class="flex flex-col items-start space-y-10">
+          <img
+            src="../assets/images/cheif-about-us.jpg"
+            alt="Chef cutting veggies"
+            class="w-full max-w-sm rounded-lg shadow-lg"
+          />
+
+          <div>
+            <h2 class="text-3xl font-extrabold underline mb-4">VALUES</h2>
+            <ul class="space-y-5 text-lg font-medium">
+              <li class="flex items-center">
+                <span class="text-orange-500 text-2xl mr-3">▶</span> Freshness
+              </li>
+              <li class="flex items-center">
+                <span class="text-orange-500 text-2xl mr-3">▶</span>
+                Authenticity
+              </li>
+              <li class="flex items-center">
+                <span class="text-orange-500 text-2xl mr-3">▶</span> Hospitality
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-white text-black px-8 py-16 max-w-7xl mx-auto">
+      <!-- Signature Dishes -->
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-10">
+        SIGNATURE DISHES
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        <!-- Dish Items -->
+        <div class="text-center">
+          <img
+            src="../assets/images/spicy-butter-chicken.jpg"
+            alt="Spicy Butter Chicken"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">spicy Butter Chicken</h3>
+          <p class="text-sm italic">Creamy, spicy, tender</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/grilled-salmon-platter.jpg"
+            alt="Grilled Salmon Platter"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Grilled Salmon Platter</h3>
+          <p class="text-sm italic">Fresh, zesty, healthy</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/beef-stew.jpg"
+            alt="Beef Stew Delight"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Beef Stew Delight</h3>
+          <p class="text-sm italic">Rich, hearty, comforting</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/garlic-herb-chicken.jpg"
+            alt="Garlic Herb Chicken"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Garlic Herb Chicken</h3>
+          <p class="text-sm italic">Savory, juicy, elegant</p>
+        </div>
+      </div>
+
+      <!-- Vegetarian Dishes -->
+      <div class="flex justify-center align-middle mb-4">
+        <span class="text-3xl"
+          >• <span class="text-3xl text-gray-400">•</span></span
+        >
+      </div>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-center mb-10">
+        Vegetarian Dishes
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        <div class="text-center">
+          <img
+            src="../assets/images/guac-veggi-bowl.jpg"
+            alt="Guac Veggie Bowl"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Guac Veggie Bowl</h3>
+          <p class="text-sm italic">Colorful, zesty, nutritious</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/rosted-green-m.jpg"
+            alt="Roasted Green Medley"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold italic">Roasted Green Medley</h3>
+          <p class="text-sm italic">Crunchy, vibrant, seasoned</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/stir-fired-paper-mix.jpg"
+            alt="Stir-Fried Pepper Mix"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Stir-Fried Pepper Mix</h3>
+          <p class="text-sm italic">Spicy, smoky, crunchy</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/Quinoa Power Bowl.jpg"
+            alt="Quinoa Power Bowl"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Quinoa Power Bowl</h3>
+          <p class="text-sm italic">Wholesome, balanced, energizing</p>
+        </div>
+      </div>
+      <div class="flex justify-center mb-4">
+        <span class="text-3xl"
+          >• <span class="text-3xl text-gray-400">•</span></span
+        >
+      </div>
+
+      <!-- Drinks -->
+      <h2 class="text-2xl md:text-3xl font-extrabold text-center mb-10">
+        Drinks
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <img
+            src="../assets/images/Herbal mint tea.jpg"
+            alt="Herbal mint tea"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Herbal mint tea</h3>
+          <p class="text-sm italic">Calming, fresh aroma</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/Vanilla Hot Chocolate.jpg"
+            alt="Vanilla Hot Chocolate"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Vanilla Hot Chocolate</h3>
+          <p class="text-sm italic">Sweet, cozy treat</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/Tropical fruit mix.jpg"
+            alt="Tropical fruit mix"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Tropical fruit mix</h3>
+          <p class="text-sm italic">Exotic, juicy combo</p>
+        </div>
+
+        <div class="text-center">
+          <img
+            src="../assets/images/Classic black coffee.jpg"
+            alt="Classic black coffee"
+            class="w-full h-40 object-cover rounded-lg mb-3"
+          />
+          <h3 class="font-semibold">Classic black coffee</h3>
+          <p class="text-sm italic">Bold, energizing brew</p>
+        </div>
+      </div>
+      <div class="flex justify-center mb-4 mt-10">
+        <span class="text-3xl"
+          >• <span class="text-3xl text-gray-400">•</span></span
+        >
+      </div>
+    </section>
+    <section class="bg-white py-16">
+      <div class="max-w-7xl mx-auto px-8">
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center mb-12">
+          <div>
+            <img
+              src="../assets/icons/Figure → van.svg.png"
+              alt="Free Delivery"
+              class="mx-auto mb-4 w-16 h-16"
+            />
+            <h3 class="text-lg font-semibold mb-2">Free Delivery</h3>
+            <p class="text-gray-600">
+              We offer free delivery to customers within Nairobi
+            </p>
+          </div>
+
+          <div>
+            <img
+              src="../assets/icons/clock.svg fill.png"
+              alt="Express Shipping"
+              class="mx-auto mb-4 w-16 h-16"
+            />
+            <h3 class="text-lg font-semibold mb-2">Express Shipping</h3>
+            <p class="text-gray-600">60 Minutes Delivery Process</p>
+          </div>
+
+          <div>
+            <img
+              src="../assets/icons/Group.png"
+              alt="Secure Payment"
+              class="mx-auto mb-4 w-16 h-16"
+            />
+            <h3 class="text-lg font-semibold mb-2">Secure Payment</h3>
+            <p class="text-gray-600">We accept Visa, Kenyan express</p>
+          </div>
+
+          <div>
+            <img
+              src="../assets/icons/call.svg fill.png"
+              alt="Outstanding Support"
+              class="mx-auto mb-4 w-16 h-16"
+            />
+            <h3 class="text-lg font-semibold mb-2">Outstanding Support</h3>
+            <p class="text-gray-600">
+              Contact us 24 hours a day, 7 days a week<br />Call Us:
+              0123-456-789
+            </p>
+          </div>
+        </div>
+
+        <!-- Order Now Button -->
+        <div class="text-center gap-2">
+          <a
+            href="#"
+            class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold inline-flex items-center space-x-2 transition"
+          >
+            <img
+              src="../assets/vectors/Vector (1).png"
+              alt="Outstanding Support"
+              class="mx-auto mb-4 mr-4 w-8 h-auto"
+            />
+
+            <span class="pb-3">Order Now</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="bg-red-500 py-12 px-6">
+      <div
+        class="max-w-6xl mx-auto bg-white rounded-xl border-4 border-yellow-400 p-6 md:p-10 flex flex-col md:flex-row items-center gap-8"
+      >
+        <!-- Image Grid with Fixed Max Width -->
+        <div class="grid grid-cols-2 gap-4 flex-shrink-0 max-w-sm w-full">
+          <img
+            src="../assets/images/booking_pic_1.jpg"
+            alt="Dining Image 1"
+            class="rounded-lg object-cover w-full h-40 md:h-48"
+          />
+          <img
+            src="../assets/images/booking_pic_2.jpg"
+            alt="Dining Image 2"
+            class="rounded-lg object-cover w-full h-40 md:h-48"
+          />
+          <img
+            src="../assets/images/booking_pic_3.jpg"
+            alt="Dining Image 3"
+            class="rounded-lg object-cover w-full h-40 md:h-48"
+          />
+          <img
+            src="../assets/images/booking_pic_4.jpg"
+            alt="Dining Image 4"
+            class="rounded-lg object-cover w-full h-40 md:h-48"
+          />
+        </div>
+
+        <!-- Text Content with Flex Grow -->
+        <div class="flex-1 text-center md:text-left space-y-4 md:pl-8">
+          <h2 class="text-3xl md:text-4xl font-extrabold leading-snug">
+            Private Dining and Events
+          </h2>
+          <p class="text-gray-700 max-w-md">
+            With many private dining spaces, M is the perfect place to host your
+            event or gathering.
+          </p>
+          <div class="space-y-3">
+            <a
+              href="#"
+              class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-md transition"
+              >Enquire Now</a
+            >
+            <p class="font-bold">Booking: +254 718 123 987</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-yellow-300 py-12 px-6">
+      <div
+        class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center bg-yellow-200 p-8 rounded-lg shadow-lg"
+      >
+        <!-- Left Text -->
+        <div class="text-center md:text-left space-y-4">
+          <h2 class="text-4xl font-extrabold leading-snug">
+            NEED TO <br />
+            SHARE A <br />
+            <span class="text-green-600">THOUGHT?</span>
+          </h2>
+        </div>
+
+        <!-- Form Section -->
+        <form class="bg-white p-8 rounded-lg shadow-md space-y-4 w-full">
+          <div>
+            <label class="block text-sm font-semibold mb-1">Your Name</label>
+            <input
+              type="text"
+              placeholder="Name"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">Your Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1"
+              >Your Phone (Optional)</label
+            >
+            <input
+              type="tel"
+              placeholder="Phone"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-1">Your Message</label>
+            <textarea
+              rows="4"
+              placeholder="Message"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex justify-center items-center space-x-2 transition"
+          >
+            <span>SUBMIT</span>
+            <svg
+              xmlns="../assets/vectors/Vector.png"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 4l16 8-16 8V4z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </section>
+    <section class="max-w-lg mx-auto my-10">
+      <div class="bg-red-500 p-6 rounded-lg shadow-lg">
+        <!-- Header -->
+        <div class="flex items-center mb-4">
+          <img
+            src="../assets/vectors/Vector (2).png"
+            alt="Chatbot"
+            class="h-8 w-8 mr-2"
+          />
+          <h2 class="text-xl font-bold">CHATBOT</h2>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="space-y-4">
+          <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
+            Hello! need help in Flame & Fork?
+          </div>
+
+          <div class="flex justify-end">
+            <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
+              Does Flame & Fork offer free delivery?
+            </div>
+          </div>
+
+          <div class="bg-white px-4 py-2 rounded-xl w-fit max-w-xs">
+            Flame & Fork offers free delivery, but only to customers within
+            Nairobi. Orders outside this area are currently not supported.
+          </div>
+
+          <div class="flex justify-end">
+            <div class="bg-gray-200 px-4 py-2 rounded-full w-fit max-w-xs">
+              What dishes do you offer?
+            </div>
+          </div>
+
+          <!-- Typing Indicator -->
+          <div class="flex space-x-2">
+            <div class="w-3 h-3 bg-pink-300 rounded-full animate-bounce"></div>
+            <div
+              class="w-3 h-3 bg-pink-300 rounded-full animate-bounce delay-150"
+            ></div>
+            <div
+              class="w-3 h-3 bg-pink-300 rounded-full animate-bounce delay-300"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Input Field -->
+        <div class="mt-6 flex">
+          <input
+            type="text"
+            placeholder="Type Message"
+            class="flex-1 px-4 py-2 rounded-l-full bg-gray-200 focus:outline-none"
+          />
+          <button
+            class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-r-full flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 12h14M12 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+    <footer class="bg-black text-white py-10 px-6">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 text-sm">
+        <!-- Logo and Description -->
+        <div>
+          <img src="../assets/images/logo.png" alt="Logo" class="h-12 mb-4" />
+          <p class="text-gray-400 mb-4">
+            Welcome to a place where taste meets comfort. Enjoy dishes crafted
+            with care, combining bold flavors and fresh ingredients. Our cozy
+            setting and thoughtful service make every visit feel special. Come
+            hungry, leave happy.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#"
+              ><img
+                src="../assets/icons/facebook-f-brands-solid.svg"
+                alt="Facebook"
+                class="h-6 w-6 bg-white"
+            /></a>
+            <a href="#"
+              ><img
+                src="../assets/icons/x-twitter-brands.svg"
+                alt="Twitter"
+                class="h-6 w-6 bg-white"
+            /></a>
+            <a href="#"
+              ><img
+                src="../assets/icons/instagram-brands.svg"
+                alt="Instagram"
+                class="h-6 w-6 bg-white"
+            /></a>
+            <a href="#"
+              ><img
+                src="../assets/icons/linkedin-brands.svg"
+                alt="LinkedIn"
+                class="h-6 w-6 bg-white"
+            /></a>
+          </div>
+        </div>
+
+        <!-- Opening Hours -->
+        <div>
+          <h3 class="font-bold mb-2">Opening Restaurant</h3>
+          <p>Mon - Mon</p>
+          <p>We offer our services for 24 hrs</p>
+        </div>
+
+        <!-- User Links -->
+        <div>
+          <h3 class="font-bold mb-2">User Link</h3>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">About Us</a></li>
+            <li><a href="#" class="hover:underline">Contact Us</a></li>
+            <li><a href="#" class="hover:underline">Order Delivery</a></li>
+            <li><a href="#" class="hover:underline">Payment & Tax</a></li>
+            <li><a href="#" class="hover:underline">Terms of Services</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+          <h3 class="font-bold mb-2">Contact Us</h3>
+          <p>Flame & Fork</p>
+          <p>P.O. Box 012367, Kenya, Nairobi</p>
+          <p>+2547 58416782</p>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1994.8719676583726!2d36.821946!3d-1.292066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d5145e7f65%3A0x7a28f5a843b67d7d!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1719407730000!5m2!1sen!2ske"
+            width="150"
+            height="100"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
