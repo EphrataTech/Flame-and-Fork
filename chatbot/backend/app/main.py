@@ -20,7 +20,8 @@ try:
             "http://localhost:5500",
             "http://localhost:8000",
             "https://flameandfork.com",
-            "https://flameandfork.onrender.com"],
+            "https://flameandfork.onrender.com",
+            "https://flame-and-fork.netlify.app"],
     allow_credentials=False,
     allow_methods=["POST", "GET"],  # Allows all methods, adjust as needed
     allow_headers=["*"],  # Allows all headers, adjust as needed
