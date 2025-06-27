@@ -181,3 +181,21 @@ function initFormValidation() {
       return true
     }
   }
+  // Form submission
+  feedbackForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    let isValid = true
+    Object.keys(fields).forEach((fieldName) => {
+      const field = fields[fieldName]
+      if (!validateField(fieldName, field)) {
+        isValid = false
+      }
+    })
+
+    if (isValid) {
+      showSuccessModal()
+      feedbackForm.reset()
+    }
+  })
+
