@@ -2,10 +2,18 @@ from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from chatbot import Gemini, api_key
 from models import ChatRequest, ChatResponse
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 # App initialization
-app = FastAPI()
+try:
+    app = FastAPI()
+except Exception as e:
+    logger.critical(f"Failed to initialize fastAPI app: {e}")
 # CORS configuration
-app.add_middleware(
+try:
+    app.add_middleware(
     CORSMiddleware,
     # Allows all origins, adjust as needed
     allow_origins=["https://flameandfork.com", "http://localhost:8000","https://flameandfork.onrender.com/"],
@@ -13,8 +21,16 @@ app.add_middleware(
     allow_methods=["POST", "GET"],  # Allows all methods, adjust as needed
     allow_headers=["*"],  # Allows all headers, adjust as needed
 )
-
-ai_platform = Gemini(api_key)
+except Exception as e:
+    logger.error(f"Failed to configure CORS: {e}")
+#Initialize AI platform
+try:
+    if not api_key:
+        raise ValueError("API key is not available")
+    ai_platform = Gemini(api_key)
+    logger.info("AI platform started successfully")
+except Exception as e:
+    logger.critical(f"Failed to initialize AI platform: {e}")
 
 @app.get("/")
 async def root():
