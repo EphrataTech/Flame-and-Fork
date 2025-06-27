@@ -1,0 +1,29 @@
+{
+  "restaurant_operations": {
+    "opening_hours": {
+      "schedule": "24 hours",
+      "days": "Monday to Monday",
+      "description": "We're open 24/7, every day of the week!"
+    },
+    "contact_info": {
+      "main_telephone": "+25476541120",
+      "private_dining_events": "+254718123987",
+      "postal_address": "P.O Box 27587 Kenya, Nairobi",
+      "Steet_Address": "123 Main Street, Nairobi, Kenya",
+      "email": "flameandfork@gmail.com",
+      "social_media": {
+        "instagram": "https://www.instagram.com",
+        "x_twitter": "https://www.x.com",
+        "facebook": "https://www.facebook.com",
+        "linkedin": "https://www.linkedin.com"
+      }
+    }
+  },
+  "operations_responses": {
+    "hours_inquiry": "We're open 24/7, every day of the week! You can reach us anytime.",
+    "contact_main": "You can reach us at +25476541120 for general inquiries.",
+    "address_inquiry": "Our postal address is P.O Box 27587 Kenya, Nairobi.",
+    "social_media": "Follow us on our social media platforms for updates and special offers!",
+    "contact_options": "You can reach us by phone at +25476541120 or follow us on Instagram, X, Facebook, and LinkedIn."
+  }
+}
