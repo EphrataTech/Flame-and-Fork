@@ -26,6 +26,7 @@ function initDarkMode() {
     })
   }
 }
+// Mobile Menu Functionality
 function initMobileMenu() {
   const mobileMenuToggle = document.getElementById("mobileMenuToggle")
   const mobileMenu = document.getElementById("mobileMenu")
@@ -47,5 +48,39 @@ function initMobileMenu() {
       icon.classList.toggle("fa-chevron-up")
     })
   }
+}
+/ Carousel Functionality
+function initCarousel() {
+  const slides = document.querySelectorAll(".carousel-slide")
+  const dots = document.querySelectorAll(".carousel-dot")
+  let currentSlide = 0
+
+  if (slides.length === 0) return
+
+  function showSlide(index) {
+    // Remove active class from all slides and dots
+    slides.forEach((slide) => slide.classList.remove("active"))
+    dots.forEach((dot) => dot.classList.remove("active"))
+
+    // Add active class to current slide and dot
+    if (slides[index]) slides[index].classList.add("active")
+    if (dots[index]) dots[index].classList.add("active")
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length
+    showSlide(currentSlide)
+  }
+
+  // Auto-play carousel
+  setInterval(nextSlide, 5000)
+
+  // Dot navigation
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      currentSlide = index
+      showSlide(currentSlide)
+    })
+  })
 }
 
