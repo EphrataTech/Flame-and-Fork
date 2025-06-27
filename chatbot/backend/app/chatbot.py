@@ -1,4 +1,5 @@
 import google.generativeai as genai
+from google.generativeai.types import BlockedPromptException
 from pathlib import Path
 from models import AIPlatform
 from dotenv import load_dotenv
@@ -34,7 +35,7 @@ def load_system_prompt():
 
 class Gemini(AIPlatform):
     def __init__(self, api_key: str):
-        self.api_key = api_key
+        self.api_key = api_key.strip()
         self.system_prompt = load_system_prompt()
         try:
             genai.configure(api_key=self.api_key)
@@ -60,8 +61,8 @@ class Gemini(AIPlatform):
                 raise RuntimeError("AI service returned empty text reponse")
             return response.text
         ##These are errors specifically from Gemini
-        except genai.types.BlockedPromptException as e:
-            logger.warning(f"Prompt was blocker: {e}")
+        except BlockedPromptException as e:
+            logger.warning(f"Prompt was blocked: {e}")
             raise ValueError("Prompt block by safety filters. Please rephrase.")
         except Exception as e:
             logger.error(f"Unexpected error: {e}")

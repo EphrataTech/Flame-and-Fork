@@ -38,8 +38,16 @@ async def root():
 
 @app.post("/chat", response_model=ChatResponse)
 async def chatbot(request: ChatRequest):
-    response_text = ai_platform.chat(request.prompt)
-    return ChatResponse(response=response_text)
+    try:
+        response_text = ai_platform.chat(request.prompt)
+        return ChatResponse(response=response_text)
+    except RuntimeError as e:
+        logger.error(f"The chatbot has encountered an error: {e}")
+        raise HTTPException(status_code=503, detail="Chatbot temporarily unavailable. Please try again later.")
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        raise HTTPException(status_code=500, detail="Unexpected server error.")
+
 
 if __name__=="__main__":
     import uvicorn
