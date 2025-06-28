@@ -7,10 +7,11 @@ import json
 import os
 import logging
 
+load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
+api_key = os.getenv("API_KEY")
 BASE_DIR = Path(__file__).resolve().parent.parent
 restaurant_dir = BASE_DIR / "restaurant_details"
 if not restaurant_dir.exists():
