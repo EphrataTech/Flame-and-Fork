@@ -7,20 +7,14 @@ import json
 import os
 import logging
 
-
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-try:
-    load_dotenv()
-except Exception as e:
-    logging.warning(f"Could not load .env file: {e}")
-    raise RuntimeError(f"Could not configure the AI service: {e}")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 restaurant_dir = BASE_DIR / "restaurant_details"
 if not restaurant_dir.exists():
+    logger.critical(f"Restaurant details directory not found: {restaurant_dir}")
     raise FileNotFoundError(f"Could not find the restaurant details directory :{restaurant_dir}")
 
 def load_system_prompt():
@@ -37,26 +31,30 @@ def load_system_prompt():
 
 class Gemini(AIPlatform):
     def __init__(self, api_key: str):
+        if not api_key:
+            logger.critical("API key has not been provided")
+            raise ValueError("API key has not been provided")
         self.api_key = api_key.strip()
         self.system_prompt = load_system_prompt()
         try:
             genai.configure(api_key=self.api_key)
+            self.model = genai.GenerativeModel(model_name="gemini-2.0-flash")
+            logger.info("Gemini AI has been loaded successfully.")
         except Exception as e:
-            logger.error(f"Failed to configure Gemini API : {e}")
+            logger.critical(f"Failed to configure Gemini API : {e}")
             raise RuntimeError(f"Could no configure AI service: {e}")
-        self.model = genai.GenerativeModel(model_name="gemini-2.0-flash")
-    
+        
     def chat(self, prompt : str) -> str:
         if not prompt:
-            raise ValueError("Prompt is required")
+            raise ValueError("Prompt is required.")
         if not isinstance(prompt, str):
-            raise TypeError("Prompt must be a string")
+            raise TypeError("Prompt must be a string.")
         if len(prompt.strip()) == 0:
-            raise ValueError("Prompt cannot be blank")
+            raise ValueError("Prompt cannot be blank.")
         try:
 
-            prompt = f"{self.system_prompt}\n\n{prompt}"
-            response = self.model.generate_content(prompt)
+            full_prompt = f"{self.system_prompt}\n\n{prompt}"
+            response = self.model.generate_content(full_prompt)
             if not response:
                 raise RuntimeError("Gemini failed to respond correctly.")
             if not response.text:
@@ -65,20 +63,7 @@ class Gemini(AIPlatform):
         ##These are errors specifically from Gemini
         except BlockedPromptException as e:
             logger.warning(f"Prompt was blocked: {e}")
-            raise ValueError("Prompt block by safety filters. Please rephrase.")
+            raise ValueError("Prompt blocked by safety filters. Please rephrase.")
         except Exception as e:
             logger.error(f"Unexpected error: {e}")
             raise RuntimeError(f"Chatbot error: {e}")
-
-
-            ##These are errors from the Gemini AI
-            
-        
-
-try:
-    api_key = os.getenv("API_KEY") 
-    if not api_key:
-        raise ValueError("API key is required but has not been provided!")
-except Exception as e:
-    logger.error(f"Error loading API key: {e}")
-    api_key = None

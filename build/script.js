@@ -434,7 +434,7 @@ const userInput = document.getElementById('userInput');
 const sendButton = document.getElementById('sendButton');   
 const statusMessage = document.getElementById('statusMessage'); 
 
-const API_ENDPOINT = 'https://flameandfork-api.onrender.com'; 
+const API_ENDPOINT = 'https://flameandfork-api.onrender.com/chat'; 
 
 function displayChatMessage(message, sender) {
     const messageElement = document.createElement('div'); 
@@ -480,8 +480,6 @@ function displayChatMessage(message, sender) {
 function showStatus(message, isError = false) {
     statusMessage.textContent = message; 
     statusMessage.classList.toggle('error-message', isError);
-
-    
     setTimeout(() => {
         statusMessage.textContent = ''; 
         statusMessage.classList.remove('error-message'); 
@@ -489,7 +487,7 @@ function showStatus(message, isError = false) {
 }
 
 async function sendUserMessage() {
-   
+
     const userQuestion = userInput.value.trim();
     if (userQuestion === '') {
         showStatus('Please enter a question before sending.', false);
@@ -537,6 +535,6 @@ userInput.addEventListener('keypress', (event) => {
         sendUserMessage();
     }
 });
-
 displayChatMessage('Hello! How can I help you today?', 'bot');
 
+  
