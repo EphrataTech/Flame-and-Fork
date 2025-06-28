@@ -1,6 +1,6 @@
 from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .chatbot import Gemini, api_key
+from .chatbot import Gemini
 from .models import ChatRequest, ChatResponse
 from dotenv import load_dotenv
 import logging
@@ -15,7 +15,7 @@ try:
 except Exception as e:
     logger.critical(f"Failed to load .env file: {e}")
     raise RuntimeError("Could not configure the AI service: {e}")
-
+api_key = os.getenv("API_KEY")
 #App initialization
 try:
     app = FastAPI()
@@ -29,13 +29,16 @@ try:
     app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5500",
-            "http://localhost:5500",
+            "http://localhost:5501",
+            "http://127.0.0.1:5501",
             "http://localhost:8000",
+            "http://127.0.0.1:8000"
             "https://flameandfork.com",
+            "http://localhost:5000"
             "https://flameandfork.onrender.com",
             "https://flame-and-fork.netlify.app",
             "null"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["POST", "GET","OPTIONS"],
     allow_headers=["*"],  # Allows all headers
 )
@@ -43,7 +46,7 @@ except Exception as e:
     logger.error(f"Failed to configure CORS: {e}")
     raise
 #Initialize AI platform
-api_key = os.getenv("API_KEY")
+
 try:
     if not api_key:
         logger.critical("Could not get the env variable")
@@ -59,16 +62,16 @@ async def root():
 
 @app.post("/chat", response_model=ChatResponse)
 async def chatbot(request: ChatRequest):
-    # try:
-    #     response_text = ai_platform.chat(request.prompt)
-    #     return ChatResponse(response=response_text)
-    # except RuntimeError as e:
-    #     logger.error(f"The chatbot has encountered an error: {e}")
-    #     raise HTTPException(status_code=503, detail="Chatbot temporarily unavailable. Please try again later.")
-    # except Exception as e:
-    #     logger.error(f"Unexpected error: {e}")
-    #     raise HTTPException(status_code=500, detail="Unexpected server error.")
-    return ChatResponse(response=f"You said: {request.prompt}")
+    try:
+        response_text = ai_platform.chat(request.prompt)
+        return ChatResponse(response=response_text)
+    except RuntimeError as e:
+        logger.error(f"The chatbot has encountered an error: {e}")
+        raise HTTPException(status_code=503, detail="Chatbot temporarily unavailable. Please try again later.")
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+        raise HTTPException(status_code=500, detail="Unexpected server error.")
+    #return ChatResponse(response={request.prompt}")
 
 
 if __name__=="__main__":
