@@ -429,114 +429,116 @@ function hideLoading(element, originalText) {
     element.innerHTML = originalText;
 }
 // ==================== CHATBOT ====================
-const chatMessages = document.getElementById('chatMessages'); 
-const userInput = document.getElementById('userInput');     
-const sendButton = document.getElementById('sendButton');   
-const statusMessage = document.getElementById('statusMessage'); 
+document.addEventListener("DOMContentLoaded", function () {
+    const chatMessages = document.getElementById('chatMessages'); 
+    const userInput = document.getElementById('userInput');     
+    const sendButton = document.getElementById('sendButton');   
+    const statusMessage = document.getElementById('statusMessage'); 
 
-const API_ENDPOINT = 'https://flameandfork-api.onrender.com'; 
+    const API_ENDPOINT = 'https://flameandfork-api.onrender.com/chat'; 
 
-function displayChatMessage(message, sender) {
-    const messageElement = document.createElement('div'); 
+    function displayChatMessage(message, sender) {
+        const messageElement = document.createElement('div'); 
 
-    if (sender === 'user') {
-        messageElement.classList.add(
-            'message',           // Base message styling
-            'bg-gray-200',       // Background color for user messages
-            'px-4',              // Horizontal padding
-            'py-2',              // Vertical padding
-            'rounded-full',      // Fully rounded corners for user messages
-            'w-fit',             // Width fits content
-            'max-w-xs',          // Maximum width to prevent messages from spanning full width
-            'ml-auto'            // Aligns message to the right (margin-left: auto)
-        );
-    } else {
-        
-        messageElement.classList.add(
-            'message',           // Base message styling
-            'bg-white',          // Background color for bot messages
-            'px-4',
-            'py-2',
-            'rounded-xl',        // Slightly less rounded corners for bot messages (as per original HTML example)
-            'w-fit',
-            'max-w-xs',
-            'mr-auto'            // Aligns message to the left (margin-right: auto)
-        );
-    }
-
-    messageElement.textContent = message; 
-
-    chatMessages.appendChild(messageElement); 
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-/**
- * Displays a temporary status or error message in a designated area below the chat.
- * The message will clear automatically after a short period.
- *
- * @param {string} message - The text content of the status message.
- * @param {boolean} isError - A boolean flag: if true, applies error-specific styling (red text).
- */
-function showStatus(message, isError = false) {
-    statusMessage.textContent = message; 
-    statusMessage.classList.toggle('error-message', isError);
-
-    
-    setTimeout(() => {
-        statusMessage.textContent = ''; 
-        statusMessage.classList.remove('error-message'); 
-    }, 4000);
-}
-
-async function sendUserMessage() {
-   
-    const userQuestion = userInput.value.trim();
-    if (userQuestion === '') {
-        showStatus('Please enter a question before sending.', false);
-        return; 
-    }
-
-    displayChatMessage(userQuestion, 'user');
-    userInput.value = ''; 
-
-    try {
-        showStatus('Typing...', false);
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json', 
-                'Accept': 'application/json'    
-            },
-            body: JSON.stringify({ prompt: userQuestion })
-        });
-
-        if (!response.ok) {
-            let errorData;
-            try {
-                errorData = await response.json();
-            } catch (e) {
-                errorData = { detail: 'An unexpected error occurred on the server. (Response not JSON)' };
-            }
-            throw new Error(errorData.detail || `HTTP error! Status: ${response.status}`);
+        if (sender === 'user') {
+            messageElement.classList.add(
+                'message',           // Base message styling
+                'bg-gray-200',       // Background color for user messages
+                'px-4',              // Horizontal padding
+                'py-2',              // Vertical padding
+                'rounded-full',      // Fully rounded corners for user messages
+                'w-fit',             // Width fits content
+                'max-w-xs',          // Maximum width to prevent messages from spanning full width
+                'ml-auto'            // Aligns message to the right (margin-left: auto)
+            );
+        } else {
+            
+            messageElement.classList.add(
+                'message',           // Base message styling
+                'bg-white',          // Background color for bot messages
+                'px-4',
+                'py-2',
+                'rounded-xl',        // Slightly less rounded corners for bot messages (as per original HTML example)
+                'w-fit',
+                'max-w-xs',
+                'mr-auto'            // Aligns message to the left (margin-right: auto)
+            );
         }
-        const data = await response.json();
 
-        displayChatMessage(data.response, 'bot');
-        showStatus(''); 
+        messageElement.textContent = message; 
 
-    } catch (error) {
-        console.error('Chatbot error:', error); 
-        displayChatMessage('I encountered an error. Please try again later.', 'bot');
-        showStatus(`Error: ${error.message || 'Something went wrong.'}`, true);
+        chatMessages.appendChild(messageElement); 
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-}
 
-sendButton.addEventListener('click', sendUserMessage);
-userInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        sendUserMessage();
+    /**
+     * Displays a temporary status or error message in a designated area below the chat.
+     * The message will clear automatically after a short period.
+     *
+     * @param {string} message - The text content of the status message.
+     * @param {boolean} isError - A boolean flag: if true, applies error-specific styling (red text).
+     */
+    function showStatus(message, isError = false) {
+        statusMessage.textContent = message; 
+        statusMessage.classList.toggle('error-message', isError);
+        setTimeout(() => {
+            statusMessage.textContent = ''; 
+            statusMessage.classList.remove('error-message'); 
+        }, 4000);
     }
+
+    async function sendUserMessage() {
+    
+        const userQuestion = userInput.value.trim();
+        if (userQuestion === '') {
+            showStatus('Please enter a question before sending.', false);
+            return; 
+        }
+
+        displayChatMessage(userQuestion, 'user');
+        userInput.value = ''; 
+
+        try {
+            showStatus('Typing...', false);
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Accept': 'application/json'    
+                },
+                body: JSON.stringify({ prompt: userQuestion })
+            });
+
+            if (!response.ok) {
+                let errorData;
+                try {
+                    errorData = await response.json();
+                } catch (e) {
+                    errorData = { detail: 'An unexpected error occurred on the server. (Response not JSON)' };
+                }
+                throw new Error(errorData.detail || `HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+
+            displayChatMessage(data.response, 'bot');
+            showStatus(''); 
+
+        } catch (error) {
+            console.error('Chatbot error:', error); 
+            displayChatMessage('I encountered an error. Please try again later.', 'bot');
+            showStatus(`Error: ${error.message || 'Something went wrong.'}`, true);
+        }
+    }
+
+    sendButton.addEventListener('click', sendUserMessage);
+    userInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            sendUserMessage();
+        }
+    });
+
+    displayChatMessage('Hello! How can I help you today?', 'bot');
+
+
+
 });
-
-displayChatMessage('Hello! How can I help you today?', 'bot');
-
