@@ -434,7 +434,7 @@ const userInput = document.getElementById('userInput');
 const sendButton = document.getElementById('sendButton');   
 const statusMessage = document.getElementById('statusMessage'); 
 
-const API_ENDPOINT = 'https://flameandfork-api.onrender.com/chat'; 
+const API_ENDPOINT = 'http://127.0.0.1:8000'; 
 
 function displayChatMessage(message, sender) {
     const messageElement = document.createElement('div'); 
@@ -499,7 +499,7 @@ async function sendUserMessage() {
 
     try {
         showStatus('Typing...', false);
-        const response = await fetch(API_ENDPOINT, {
+        const response = await fetch('https://flameandfork-api.onrender.com/chat', {
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json', 
@@ -518,6 +518,7 @@ async function sendUserMessage() {
             throw new Error(errorData.detail || `HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+       
 
         displayChatMessage(data.response, 'bot');
         showStatus(''); 
