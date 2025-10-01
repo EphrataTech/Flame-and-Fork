@@ -4,8 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import ChatRequest, ChatResponse
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
-from chatbot import logger
-import logging
+from db_handler import logger
 import os
 
 # Load environment variables
