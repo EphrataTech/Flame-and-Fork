@@ -1,6 +1,6 @@
 from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from models import ChatRequest, ChatResponse
+from .models import ChatRequest, ChatResponse
 from .db_handler import logger
 from .chatbot import assistant
 
