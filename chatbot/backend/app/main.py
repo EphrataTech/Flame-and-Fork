@@ -1,8 +1,8 @@
 from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models import ChatRequest, ChatResponse
-from db_handler import logger
-from chatbot import assistant
+from .db_handler import logger
+from .chatbot import assistant
 
 try:
     app = FastAPI(title = "Flame and Fork",description="Flame and Fork Chatbot",version="1.1" )
