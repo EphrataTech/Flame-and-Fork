@@ -1,23 +1,38 @@
-import google.generativeai as genai
-from google.generativeai.types import BlockedPromptException
+from langchain_community.document_loaders import JSONLoader, DirectoryLoader
 from pathlib import Path
-from .models import AIPlatform
 from dotenv import load_dotenv
 import json
 import os
 import logging
 
 load_dotenv()
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(filename)s:%(lineno)d | %(levelname)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 logger = logging.getLogger(__name__)
 
-api_key = os.getenv("API_KEY")
 BASE_DIR = Path(__file__).resolve().parent.parent
 restaurant_dir = BASE_DIR / "restaurant_details"
 if not restaurant_dir.exists():
     logger.critical(f"Restaurant details directory not found: {restaurant_dir}")
     raise FileNotFoundError(f"Could not find the restaurant details directory :{restaurant_dir}")
 
+
+json_loader = DirectoryLoader(
+    str(restaurant_dir),
+    loader_cls=lambda file_path: JSONLoader(
+        file_path=file_path,
+        jq_schema=".",       # Load entire JSON
+        text_content=False,
+    glob="*.json"
+)
+try:
+    json_docs = json_loader.load()
+    logger.info("Successfully loaded the JSON files")
+except Exception as e:
+    logger.exception("Error in loading the JSON files!")
 def load_system_prompt():
     # Add more files to load data from
     with open(f"{restaurant_dir}/system_prompt.md", "r") as prompt_file:

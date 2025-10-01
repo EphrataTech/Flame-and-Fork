@@ -4,12 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from models import ChatRequest, ChatResponse
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
+from chatbot import logger
 import logging
 import os
 
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 # Load environment variables
 try:
     load_dotenv()
@@ -69,8 +67,6 @@ async def chat(request: ChatRequest):
         return ChatResponse(response=response_text)
     except Exception as e:
         logger.exception("The chatbot failed to respond.")
-
-
 
 if __name__=="__main__":
     import uvicorn
