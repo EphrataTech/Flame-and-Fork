@@ -1,18 +1,8 @@
 from fastapi import FastAPI,status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-# from .chatbot import Gemini
 from models import ChatRequest, ChatResponse
 from db_handler import logger
-import os
-
-# Load environment variables
-try:
-    load_dotenv()
-    logger.info("Environment variables loaded")
-except Exception as e:
-    logger.critical(f"Failed to load .env file: {e}")
-    raise RuntimeError("Could not configure the AI service: {e}")
-#App initialization
+from chatbot import assistant
 
 try:
     app = FastAPI(title = "Flame and Fork",description="Flame and Fork Chatbot",version="1.1" )
@@ -21,7 +11,6 @@ except Exception as e:
     logger.critical(f"Failed to initialize fastAPI app: {e}")
     raise
 
-# CORS configuration
 
 origins = origins=["http://127.0.0.1:5500",
             "http://localhost:5501",
@@ -30,7 +19,8 @@ origins = origins=["http://127.0.0.1:5500",
             "http://127.0.0.1:8000",
             "https://flameandfork.com",
             "http://localhost:5000",
-            "https://flame-and-fork.netlify.app",]
+            "https://flame-and-fork.netlify.app",
+            "*"]
 try:
     app.add_middleware(
     CORSMiddleware,
@@ -43,14 +33,6 @@ except Exception as e:
     logger.error(f"Failed to configure CORS: {e}")
     raise
 
-try:
-    ai_model = os.getenv("GROQ_MODEL")
-    groq_api_key = os.getenv("GROQ_API_KEY")
-    ai_platform = ChatGroq(model=ai_model,api_key=groq_api_key)
-    logger.info("Successfully initiated the AI model")
-except Exception as e:
-    logger.exception("Failed to initialize the AI model")
-
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Chatbot API"}
@@ -58,12 +40,14 @@ async def root():
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     try:
-        response_text = ai_platform.invoke(request.prompt).content
+        response_text = assistant(request.prompt)
         if response_text:
             logger.info("Chatbot returned an answer!")
         return ChatResponse(response=response_text)
     except Exception as e:
         logger.exception("The chatbot failed to respond.")
+        raise HTTPException(status_code=500, detail="Chatbot failed to respond.")
+
 
 if __name__=="__main__":
     import uvicorn
