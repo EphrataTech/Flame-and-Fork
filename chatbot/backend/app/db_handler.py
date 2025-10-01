@@ -22,18 +22,18 @@ if not restaurant_dir.exists():
     raise FileNotFoundError(f"Could not find the restaurant details directory :{restaurant_dir}")
 
 persist_directory = BASE_DIR/"db"
-json_loader = DirectoryLoader(
-    str(restaurant_dir),
-    loader_cls=lambda file_path: JSONLoader(
-        file_path=file_path,
-        jq_schema=".",
-        text_content=False,),
-        glob="*.json")
-try:
-    json_docs = json_loader.load()
-    logger.info("Successfully loaded the JSON files")
-except Exception as e:
-    logger.exception("Error in loading the JSON files!")
+# json_loader = DirectoryLoader(
+#     str(restaurant_dir),
+#     loader_cls=lambda file_path: JSONLoader(
+#         file_path=file_path,
+#         jq_schema=".",
+#         text_content=False,),
+#         glob="*.json")
+# try:
+#     json_docs = json_loader.load()
+#     logger.info("Successfully loaded the JSON files")
+# except Exception as e:
+#     logger.exception("Error in loading the JSON files!")
 
 try:
     embeddings = CohereEmbeddings(
@@ -50,18 +50,18 @@ try:
 except Exception as e:
     logger.exception("Failed to initialize the text splitter")
 
-split_text = text_splitter.split_documents(json_docs)
+# split_text = text_splitter.split_documents(json_docs)
 
 # Populating the database
-try:
+# try:
 
-    vectordb = Chroma.from_documents(
-        persist_directory=persist_directory,
-        embedding=embeddings,
-        documents=split_text
-    )
-except Exception as e:
-    logger.exception("Failed to populate the Database")
+#     vectordb = Chroma.from_documents(
+#         persist_directory=persist_directory,
+#         embedding=embeddings,
+#         documents=split_text
+#     )
+# except Exception as e:
+#     logger.exception("Failed to populate the Database")
 
 # Retrieving the database
 try:
