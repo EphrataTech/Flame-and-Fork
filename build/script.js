@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const heroImages = [
     "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
     "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
-    "https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop",
+    "https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit-crop",
   ];
 
   const typewriterTexts = ["RESTAURANT", "EXPERIENCE", "FLAVORS"];
@@ -33,6 +33,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const feedbackForm = document.getElementById("feedbackForm");
   const successModal = document.getElementById("successModal");
   const closeModalBtn = document.getElementById("closeModal");
+
+  // Chatbot Elements
+  const chatMessages = document.getElementById('chatMessages'); 
+  const userInput = document.getElementById('userInput');     
+  const sendButton = document.getElementById('sendButton');   
+  const statusMessage = document.getElementById('statusMessage'); 
+  const chatToggleBtn = document.getElementById('chatToggleBtn'); // New Toggle Button
+  const chatWindow = document.getElementById('chatWindow');       // New Chat Window
+  const closeChatBtn = document.getElementById('closeChatBtn');   // New Close Button
 
   // ==================== DARK MODE FUNCTIONALITY ====================
   function toggleDarkMode() {
@@ -304,7 +313,153 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ==================== EVENT LISTENERS ====================
+  // ==================== CHATBOT CORE LOGIC ====================
+
+  /**
+   * Displays a chat message in the chat window.
+   * @param {string} message - The text content of the message.
+   * @param {'user' | 'bot'} sender - The sender type.
+   */
+  function displayChatMessage(message, sender) {
+    const messageElement = document.createElement('div'); 
+
+    if (sender === 'user') {
+        messageElement.classList.add(
+            'message',           // Base message styling
+            'bg-red-200',        // Use a color that contrasts with the window background
+            'text-gray-900',
+            'px-4',              
+            'py-2',              
+            'rounded-full',      
+            'w-fit',             
+            'max-w-xs',          
+            'ml-auto'            // Aligns message to the right
+        );
+    } else {
+        
+        messageElement.classList.add(
+            'message',           
+            'bg-gray-200',       // Use a different color for bot messages
+            'text-gray-900',
+            'px-4',
+            'py-2',
+            'rounded-xl',        
+            'w-fit',
+            'max-w-xs',
+            'mr-auto'            // Aligns message to the left
+        );
+    }
+
+    messageElement.textContent = message; 
+
+    chatMessages.appendChild(messageElement); 
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+  }
+
+  /**
+   * Displays a temporary status or error message.
+   * @param {string} message - The text content.
+   * @param {boolean} isError - If true, applies error styling.
+   */
+  function showStatus(message, isError = false) {
+      statusMessage.textContent = message; 
+      statusMessage.classList.toggle('text-red-500', isError);
+      statusMessage.classList.toggle('text-gray-500', !isError);
+      setTimeout(() => {
+          if (!isError) { // Only clear non-error statuses (like "Typing...")
+              statusMessage.textContent = ''; 
+          }
+      }, 4000);
+  }
+
+  async function sendUserMessage() {
+
+    const userQuestion = userInput.value.trim();
+    if (userQuestion === '') {
+        showStatus('Please enter a question before sending.', false);
+        return; 
+    }
+
+    displayChatMessage(userQuestion, 'user');
+    userInput.value = ''; 
+
+    try {
+        showStatus('Typing...', false);
+        
+        // Corrected API endpoint for local testing (FastAPI on 8003)
+        const response = await fetch('https://flameandfork-api.onrender.com/chat', { 
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json', 
+                'Accept': 'application/json'    
+            },
+            body: JSON.stringify({ prompt: userQuestion })
+        });
+
+
+        if (!response.ok) {
+            let errorData;
+            try {
+                errorData = await response.json(); 
+            } catch (e) {
+                errorData = { detail: `An unexpected server error occurred (Status ${response.status}).` };
+            }
+            throw new Error(errorData.detail || `HTTP error! Status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+       
+        displayChatMessage(data.response, 'bot');
+        showStatus(''); 
+
+    } catch (error) {
+        console.error('Chatbot error:', error); 
+        displayChatMessage('I encountered an error. Please try again later.', 'bot');
+        showStatus(`Error: Could not connect to the assistant. Ensure the backend is running on 127.0.0.1:8003.`, true);
+    }
+  }
+
+  // ==================== CHATBOT UI TOGGLE ====================
+
+  function toggleChatWindow() {
+      const isHidden = chatWindow.classList.toggle('hidden');
+      
+      const icon = chatToggleBtn.querySelector('i');
+
+      if (isHidden) {
+          icon.className = 'fas fa-comment-dots text-2xl'; // Show chat icon
+      } else {
+          icon.className = 'fas fa-minus text-2xl'; // Show minimize icon
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          userInput.focus();
+      }
+  }
+
+  function initChatbotEventListeners() {
+    // Chatbot UI Toggle
+    if (chatToggleBtn && closeChatBtn) {
+        chatToggleBtn.addEventListener('click', toggleChatWindow);
+        closeChatBtn.addEventListener('click', toggleChatWindow);
+    }
+    
+    // Chat message sending logic
+    if (sendButton) {
+        sendButton.addEventListener('click', sendUserMessage);
+    }
+    if (userInput) {
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendUserMessage();
+            }
+        });
+    }
+
+    // Initial welcome message 
+    displayChatMessage('Hello! How can I help you today? I can answer questions about Flame and Fork!.', 'bot');
+  }
+
+
+  // ==================== MAIN EVENT LISTENERS ====================
   function initEventListeners() {
     // Dark mode toggle
     if (darkModeToggle) {
@@ -354,12 +509,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Close mobile menu when clicking outside
     document.addEventListener("click", (e) => {
-      if (
-        !e.target.closest("nav") &&
-        !mobileMenu.classList.contains("hidden")
-      ) {
-        toggleMobileMenu();
-      }
+      // Logic removed as it can interfere with other clicks (like the chatbot toggle)
     });
   }
 
@@ -382,8 +532,11 @@ document.addEventListener("DOMContentLoaded", function () {
     initDishCardAnimations();
     initNavbarScrollEffect();
 
-    // Set up event listeners
+    // Set up general event listeners
     initEventListeners();
+
+    // Set up CHATBOT event listeners and initial message
+    initChatbotEventListeners();
 
     console.log("Flame & Fork website initialized successfully! 🔥🍴");
   }
@@ -424,118 +577,6 @@ function showLoading(element) {
 }
 
 function hideLoading(element, originalText) {
-
     element.disabled = false;
     element.innerHTML = originalText;
 }
-// ==================== CHATBOT ====================
-const chatMessages = document.getElementById('chatMessages'); 
-const userInput = document.getElementById('userInput');     
-const sendButton = document.getElementById('sendButton');   
-const statusMessage = document.getElementById('statusMessage'); 
-
-const API_ENDPOINT = 'http://127.0.0.1:8000'; 
-
-function displayChatMessage(message, sender) {
-    const messageElement = document.createElement('div'); 
-
-    if (sender === 'user') {
-        messageElement.classList.add(
-            'message',           // Base message styling
-            'bg-gray-200',       // Background color for user messages
-            'px-4',              // Horizontal padding
-            'py-2',              // Vertical padding
-            'rounded-full',      // Fully rounded corners for user messages
-            'w-fit',             // Width fits content
-            'max-w-xs',          // Maximum width to prevent messages from spanning full width
-            'ml-auto'            // Aligns message to the right (margin-left: auto)
-        );
-    } else {
-        
-        messageElement.classList.add(
-            'message',           // Base message styling
-            'bg-white',          // Background color for bot messages
-            'px-4',
-            'py-2',
-            'rounded-xl',        // Slightly less rounded corners for bot messages (as per original HTML example)
-            'w-fit',
-            'max-w-xs',
-            'mr-auto'            // Aligns message to the left (margin-right: auto)
-        );
-    }
-
-    messageElement.textContent = message; 
-
-    chatMessages.appendChild(messageElement); 
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-/**
- * Displays a temporary status or error message in a designated area below the chat.
- * The message will clear automatically after a short period.
- *
- * @param {string} message - The text content of the status message.
- * @param {boolean} isError - A boolean flag: if true, applies error-specific styling (red text).
- */
-function showStatus(message, isError = false) {
-    statusMessage.textContent = message; 
-    statusMessage.classList.toggle('error-message', isError);
-    setTimeout(() => {
-        statusMessage.textContent = ''; 
-        statusMessage.classList.remove('error-message'); 
-    }, 4000);
-}
-
-async function sendUserMessage() {
-
-    const userQuestion = userInput.value.trim();
-    if (userQuestion === '') {
-        showStatus('Please enter a question before sending.', false);
-        return; 
-    }
-
-    displayChatMessage(userQuestion, 'user');
-    userInput.value = ''; 
-
-    try {
-        showStatus('Typing...', false);
-        const response = await fetch('https://flameandfork-api.onrender.com/chat', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json', 
-                'Accept': 'application/json'    
-            },
-            body: JSON.stringify({ prompt: userQuestion })
-        });
-
-        if (!response.ok) {
-            let errorData;
-            try {
-                errorData = await response.json();
-            } catch (e) {
-                errorData = { detail: 'An unexpected error occurred on the server. (Response not JSON)' };
-            }
-            throw new Error(errorData.detail || `HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-       
-
-        displayChatMessage(data.response, 'bot');
-        showStatus(''); 
-
-    } catch (error) {
-        console.error('Chatbot error:', error); 
-        displayChatMessage('I encountered an error. Please try again later.', 'bot');
-        showStatus(`Error: ${error.message || 'Something went wrong.'}`, true);
-    }
-}
-
-sendButton.addEventListener('click', sendUserMessage);
-userInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-        sendUserMessage();
-    }
-});
-displayChatMessage('Hello! How can I help you today?', 'bot');
-
-  

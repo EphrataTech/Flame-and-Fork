@@ -20,11 +20,11 @@ origins = origins=["http://127.0.0.1:5500",
             "https://flameandfork.com",
             "http://localhost:5000",
             "https://flame-and-fork.netlify.app",
-            "*"]
+            "http://0.0.0.0:8003/"]
 try:
     app.add_middleware(
     CORSMiddleware,
-    allow_origins=[origins],
+    allow_origins=origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"]
