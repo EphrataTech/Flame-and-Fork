@@ -35,9 +35,7 @@ try:
             "http://127.0.0.1:8000",
             "https://flameandfork.com",
             "http://localhost:5000",
-            "https://flameandfork.onrender.com",
-            "https://flame-and-fork.netlify.app",
-            "null"],
+            "https://flame-and-fork.netlify.app",],
     allow_credentials=False,
     allow_methods=["POST", "GET","OPTIONS"],
     allow_headers=["*"],  # Allows all headers
