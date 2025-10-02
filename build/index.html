@@ -21,7 +21,6 @@
         <nav class="flex items-center justify-between px-8 py-4">
           <img src="./assets/images/logo.png" alt="Logo" class="h-12" />
 
-          <!-- Desktop Menu -->
           <ul class="hidden md:flex space-x-6 text-white font-bold">
             <li><a href="./index.html">HOME</a></li>
             <li><a href="./menu.html">MENU</a></li>
@@ -29,7 +28,6 @@
             <li><a href="./feedback.html">FEEDBACK</a></li>
           </ul>
 
-          <!-- Dark Mode Toggle (Desktop only) -->
           <button
             id="darkModeToggle"
             class="hidden md:inline text-white text-xl ml-4"
@@ -38,13 +36,11 @@
             <i class="fas fa-sun hidden"></i>
           </button>
 
-          <!-- Mobile Menu Toggle Button -->
           <button id="mobileMenuToggle" class="md:hidden text-white text-2xl">
             <i class="fas fa-bars"></i>
           </button>
         </nav>
 
-        <!-- Mobile Menu Content (Initially hidden) -->
         <div
           id="mobileMenu"
           class="hidden md:hidden bg-black text-white w-full overflow-hidden transition-all duration-300 max-h-0"
@@ -77,7 +73,6 @@
       <div
         class="min-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-start sm:max-w-7xl"
       >
-        <!-- Left Side: About Section -->
         <div>
           <h2 class="text-4xl font-extrabold underline mb-6">About us</h2>
           <p class="mb-8 max-w-md text-lg font-medium leading-relaxed">
@@ -92,7 +87,6 @@
           />
         </div>
 
-        <!-- Right Side: Image + Values -->
         <div class="flex flex-col items-start space-y-10">
           <img
             src="./assets/images/cheif-about-us.jpg"
@@ -119,12 +113,10 @@
       </div>
     </section>
     <section class="bg-white text-black px-8 py-16 max-w-7xl mx-auto">
-      <!-- Signature Dishes -->
       <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-10">
         SIGNATURE DISHES
       </h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-        <!-- Dish Items -->
         <div class="text-center dish-card">
           <img
             src="./assets/images/spicy-butter-chicken.jpg"
@@ -166,7 +158,6 @@
         </div>
       </div>
 
-      <!-- Vegetarian Dishes -->
       <div class="flex justify-center align-middle mb-4">
         <span class="text-3xl"
           >• <span class="text-3xl text-gray-400">•</span></span
@@ -222,7 +213,6 @@
         >
       </div>
 
-      <!-- Drinks -->
       <h2 class="text-2xl md:text-3xl font-extrabold text-center mb-10">
         Drinks
       </h2>
@@ -275,7 +265,6 @@
     </section>
     <section class="bg-white py-16">
       <div class="max-w-7xl mx-auto px-8">
-        <!-- Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10 text-center mb-12">
           <div>
             <img
@@ -323,7 +312,6 @@
           </div>
         </div>
 
-        <!-- Order Now Button -->
         <div class="text-center gap-2">
           <a
             href="#"
@@ -344,7 +332,6 @@
       <div
         class="max-w-6xl mx-auto bg-white rounded-xl border-4 border-yellow-400 p-6 md:p-10 flex flex-col md:flex-row items-center gap-8"
       >
-        <!-- Image Grid with Fixed Max Width -->
         <div class="grid grid-cols-2 gap-4 flex-shrink-0 max-w-sm w-full">
           <img
             src="./assets/images/booking_pic_1.jpg"
@@ -368,7 +355,6 @@
           />
         </div>
 
-        <!-- Text Content with Flex Grow -->
         <div class="flex-1 text-center md:text-left space-y-4 md:pl-8">
           <h2 class="text-3xl md:text-4xl font-extrabold leading-snug">
             Private Dining and Events
@@ -392,7 +378,6 @@
       <div
         class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center bg-yellow-200 p-8 rounded-lg shadow-lg"
       >
-        <!-- Left Text -->
         <div class="text-center md:text-left space-y-4">
           <h2 class="text-4xl font-extrabold leading-snug">
             NEED TO <br />
@@ -465,10 +450,8 @@
           >
             <span>SUBMIT</span>
             <svg
-
-              xmlns="../assets/vectors/Vector.png"
-              class="h-4 w-4"script
-
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -484,67 +467,55 @@
         </form>
       </div>
     </section>
-    <section class="max-w-lg mx-auto my-10">
-      <!--<div class="bg-red-500 p-6 rounded-lg shadow-lg"> -->
-      <div class="chat-container-wrapper p-6">
-        <!-- Header -->
-        <div class="flex items-center mb-4">
-          <img
-            src="./assets/vectors/Vector (2).png"
-            alt="Chatbot"
-            class="h-8 w-8 mr-2"
-          />
-          <h2 class="text-xl font-bold">CHATBOT</h2>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-          <!--Chat messages will be added here by javascript-->
-        </div>
-          <!-- Typing Indicator -->
-          <div class="flex space-x-2">
-            <div class="w-3 h-3 bg-pink-300 rounded-full animate-bounce"></div>
-            <div
-              class="w-3 h-3 bg-pink-300 rounded-full animate-bounce delay-150"
-            ></div>
-            <div
-              class="w-3 h-3 bg-pink-300 rounded-full animate-bounce delay-300"
-            ></div>
-          </div>
-        </div>
 
-        <!-- Input Field -->
-        <div class="mt-6 flex chat-input-area">
-          <input
-            type="text"
-            id="userInput"
-            placeholder="Type Message"
-            class="flex-1 px-4 py-2 rounded-l-full bg-gray-200 focus:outline-none"
-          />
-          <button
-          id="sendButton"
-            class="bg-gray-800 hover:bg-black text-white px-4 py-2 rounded-r-full flex items-center justify-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 12h14M12 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-75 z-50 items-center justify-center transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-lg shadow-2xl text-center max-w-sm mx-4">
+            <i class="fas fa-check-circle text-green-500 text-6xl mb-4"></i>
+            <h3 class="text-2xl font-bold mb-2">Thank You!</h3>
+            <p class="text-gray-600 mb-6">Your feedback has been successfully submitted. We appreciate your input!</p>
+            <button id="closeModal" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition">
+                Close
+            </button>
         </div>
-        <div id="statusMessage" class="status-message"></div>
-      </div>
-    </section>
+    </div>
+    <div id="chatbotContainer" class="fixed bottom-4 right-4 z-50">
+        <button id="chatToggleBtn" class="bg-red-600 text-white p-4 rounded-full shadow-lg hover:bg-red-700 transition duration-300">
+            <i class="fas fa-comment-dots text-2xl"></i>
+        </button>
+
+        <div id="chatWindow" class="hidden bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg shadow-2xl w-96 h-[500px] flex flex-col mt-4 border border-gray-300 dark:border-gray-700">
+            
+            <div class="bg-red-600 text-white p-3 rounded-t-lg flex justify-between items-center">
+                <h3 class="font-bold">Flame & Fork Assistant 🔥🍴</h3>
+                <button id="closeChatBtn" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div id="chatMessages" class="flex-1 p-3 space-y-3 overflow-y-auto custom-scrollbar">
+                </div>
+
+            <div id="statusMessage" class="text-sm px-3 text-gray-500 min-h-6">
+                </div>
+
+            <div class="p-3 border-t border-gray-300 dark:border-gray-700 flex">
+                <input
+                    type="text"
+                    id="userInput"
+                    placeholder="Ask about the menu or hours..."
+                    class="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
+                />
+                <button
+                    id="sendButton"
+                    class="bg-red-600 text-white p-2 rounded-r-lg hover:bg-red-700 transition duration-150"
+                >
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <footer class="bg-black text-white py-10 px-6">
       <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 text-sm">
-        <!-- Logo and Description -->
         <div>
           <img src="./assets/images/logo.png" alt="Logo" class="h-12 mb-4" />
           <p class="text-gray-400 mb-4">
@@ -581,14 +552,12 @@
           </div>
         </div>
 
-        <!-- Opening Hours -->
         <div>
           <h3 class="font-bold mb-2">Opening Restaurant</h3>
           <p>Mon - Mon</p>
           <p>We offer our services for 24 hrs</p>
         </div>
 
-        <!-- User Links -->
         <div>
           <h3 class="font-bold mb-2">User Link</h3>
           <ul class="space-y-1">
@@ -600,7 +569,6 @@
           </ul>
         </div>
 
-        <!-- Contact Info -->
         <div>
           <h3 class="font-bold mb-2">Contact Us</h3>
           <p>Flame & Fork</p>

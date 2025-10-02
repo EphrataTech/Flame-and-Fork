@@ -1,70 +1,148 @@
-import google.generativeai as genai
-from google.generativeai.types import BlockedPromptException
-from pathlib import Path
-from .models import AIPlatform
+from langchain.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from dotenv import load_dotenv
-import json
+from .db_handler import logger, retriever
 import os
-import logging
 
-load_dotenv()
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+try:
+    load_dotenv()
+    logger.info("Environment variables loaded")
+except Exception as e:
+    logger.critical(f"Failed to load .env file: {e}")
+    raise RuntimeError("Could not configure the AI service: {e}")
 
-api_key = os.getenv("API_KEY")
-BASE_DIR = Path(__file__).resolve().parent.parent
-restaurant_dir = BASE_DIR / "restaurant_details"
-if not restaurant_dir.exists():
-    logger.critical(f"Restaurant details directory not found: {restaurant_dir}")
-    raise FileNotFoundError(f"Could not find the restaurant details directory :{restaurant_dir}")
 
-def load_system_prompt():
-    # Add more files to load data from
-    with open(f"{restaurant_dir}/system_prompt.md", "r") as prompt_file:
-        prompt_content = prompt_file.read().strip()
-    with open(f"{restaurant_dir}/restaurant_menu.json", "r") as menu:
-        menu_text = json.dumps(json.load(menu), indent=2)
-    with open(f"{restaurant_dir}/restaurant_operations.json", "r") as restaurant_operations:
-        operations_content = json.dumps(json.load(restaurant_operations), indent=2)
-    with open(f"{restaurant_dir}/restaurant_services.json", "r") as restaurant_services:
-        services_content = json.dumps(json.load(restaurant_services),indent=2)
-    return f"{prompt_content}\n\n--- MENU ---\n{menu_text}\n\n--- OPERATIONS ---\n{operations_content}\n\n--- SERVICES ---\n{services_content}"
+try:
+    ai_model = os.getenv("GROQ_MODEL")
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    llm = ChatGroq(model=ai_model,api_key=groq_api_key,temperature=0.7, reasoning_effort="medium")
+    logger.info("Successfully initiated the AI model")
+except Exception as e:
+    logger.exception("Failed to initialize the AI model")
 
-class Gemini(AIPlatform):
-    def __init__(self, api_key: str):
-        if not api_key:
-            logger.critical("API key has not been provided")
-            raise ValueError("API key has not been provided")
-        self.api_key = api_key.strip()
-        self.system_prompt = load_system_prompt()
-        try:
-            genai.configure(api_key=self.api_key)
-            self.model = genai.GenerativeModel(model_name="gemini-2.0-flash")
-            logger.info("Gemini AI has been loaded successfully.")
-        except Exception as e:
-            logger.critical(f"Failed to configure Gemini API : {e}")
-            raise RuntimeError(f"Could no configure AI service: {e}")
-        
-    def chat(self, prompt : str) -> str:
-        if not prompt:
-            raise ValueError("Prompt is required.")
-        if not isinstance(prompt, str):
-            raise TypeError("Prompt must be a string.")
-        if len(prompt.strip()) == 0:
-            raise ValueError("Prompt cannot be blank.")
-        try:
+def assistant(user_query: str):
+    chat_prompt_template = ChatPromptTemplate.from_template(
+    """
+You are the official AI Chatbot for **Flame & Fork Restaurant**.  
+Keep replies **brief, realistic, and chat-like** — like WhatsApp or Messenger support.  
+Do **not** repeat long intros or greetings in every reply.  
 
-            full_prompt = f"{self.system_prompt}\n\n{prompt}"
-            response = self.model.generate_content(full_prompt)
-            if not response:
-                raise RuntimeError("Gemini failed to respond correctly.")
-            if not response.text:
-                raise RuntimeError("AI service returned empty text reponse")
-            return response.text
-        ##These are errors specifically from Gemini
-        except BlockedPromptException as e:
-            logger.warning(f"Prompt was blocked: {e}")
-            raise ValueError("Prompt blocked by safety filters. Please rephrase.")
-        except Exception as e:
-            logger.error(f"Unexpected error: {e}")
-            raise RuntimeError(f"Chatbot error: {e}")
+---
+
+### 📘 Knowledge Base (for reference only, do not dump unless asked):
+- Open 24/7.
+- Location: Kenyatta Avenue, Nairobi 00100.
+- Delivery: Free Nairobi delivery (2–3 hrs) 🚚, Express (60 mins, +Ksh 200) ⏱️.
+- Services: Private dining, catering, online ordering.
+- Menu: Signature dishes, vegetarian 🥦, spicy 🌶️, drinks.
+
+---
+
+### 🚨 Handling Off-topic:
+- If question is unrelated → Answer briefly, but warn:  
+  *"Note: I’m mainly for Flame & Fork assistance."*
+
+---
+
+### ⚡ Style:
+- **Tone:** Warm & concise.  
+- **Length:** 1–3 short sentences.  
+- **Formatting:** Use simple bullets/emojis if needed.  
+
+---
+    Context: {context}
+👤 User: {user_query}  
+💬 Chatbot:
+    """
+)
+
+
+    try:
+        docs = retriever.get_relevant_documents(user_query)
+        context = "\n".join([doc.page_content for doc in docs]).strip() if docs else ""
+    except Exception as e:
+        logger.error(f"Retriever failed: {e}")
+        context = ""
+    chain = chat_prompt_template | llm | StrOutputParser()
+
+    return chain.invoke({
+        "user_query": user_query,
+        "context": context })
+
+
+from langchain.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
+from dotenv import load_dotenv
+from .db_handler import logger, retriever
+import os
+
+try:
+    load_dotenv()
+    logger.info("Environment variables loaded")
+except Exception as e:
+    logger.critical(f"Failed to load .env file: {e}")
+    raise RuntimeError("Could not configure the AI service: {e}")
+
+
+try:
+    ai_model = os.getenv("GROQ_MODEL")
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    llm = ChatGroq(model=ai_model,api_key=groq_api_key,temperature=0.7, reasoning_effort="medium")
+    logger.info("Successfully initiated the AI model")
+except Exception as e:
+    logger.exception("Failed to initialize the AI model")
+
+def assistant(user_query: str):
+    chat_prompt_template = ChatPromptTemplate.from_template(
+    """
+You are the official AI Chatbot for **Flame & Fork Restaurant**.  
+Keep replies **brief, realistic, and chat-like** — like WhatsApp or Messenger support.  
+Do **not** repeat long intros or greetings in every reply.  
+
+---
+
+### 📘 Knowledge Base (for reference only, do not dump unless asked):
+- Open 24/7.
+- Location: Kenyatta Avenue, Nairobi 00100.
+- Delivery: Free Nairobi delivery (2–3 hrs) 🚚, Express (60 mins, +Ksh 200) ⏱️.
+- Services: Private dining, catering, online ordering.
+- Menu: Signature dishes, vegetarian 🥦, spicy 🌶️, drinks.
+
+---
+
+### 🚨 Handling Off-topic:
+- If question is unrelated → Answer briefly, but warn:  
+  *"Note: I’m mainly for Flame & Fork assistance."*
+
+---
+
+### ⚡ Style:
+- **Tone:** Warm & concise.  
+- **Length:** 1–3 short sentences.  
+- **Formatting:** Use simple bullets/emojis if needed.  
+
+---
+    Context: {context}
+👤 User: {user_query}  
+💬 Chatbot:
+    """
+)
+
+
+    try:
+        docs = retriever.get_relevant_documents(user_query)
+        context = "\n".join([doc.page_content for doc in docs]).strip() if docs else ""
+    except Exception as e:
+        logger.error(f"Retriever failed: {e}")
+        context = ""
+    chain = chat_prompt_template | llm | StrOutputParser()
+
+    return chain.invoke({
+        "user_query": user_query,
+        "context": context })
+
+
